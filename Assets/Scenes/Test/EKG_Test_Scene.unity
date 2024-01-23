@@ -259,12 +259,119 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  EKGCurve_Unhealthy:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2895652
+      value: 0
+      inSlope: -0
+      outSlope: 0.3029785
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.30447552
+      value: 0.004517503
+      inSlope: 0.048647318
+      outSlope: -0.042260613
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.7873996
+      outWeight: 0.6626718
+    - serializedVersion: 3
+      time: 0.3343911
+      value: 0.0023851572
+      inSlope: -0.01420885
+      outSlope: -0.01420885
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.36143553
+      value: 0.005881084
+      inSlope: -0.012236448
+      outSlope: -0.012236448
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.38371146
+      value: -0.01619849
+      inSlope: -0.012175047
+      outSlope: -0.012175047
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.40438268
+      value: 0.008402015
+      inSlope: -0.009529529
+      outSlope: -0.009529529
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.45389587
+      value: 0.0024624425
+      inSlope: -0.020749789
+      outSlope: -0.020749789
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.49924013
+      value: 0.0042500943
+      inSlope: 0.016973099
+      outSlope: 0.016973099
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5158893
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   Complexity: 105
   Speed: 1
   Magnitude: 1000
   Frequency: 1
   HorizontalLength: 1
   Offset: 0
+  EKGHealth: 0
+  EKGMaxHealth: 10
 --- !u!120 &95567223
 LineRenderer:
   serializedVersion: 2

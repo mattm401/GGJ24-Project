@@ -6,6 +6,7 @@ public class EKGController : MonoBehaviour
 {
     public LineRenderer EKGLine;
     public AnimationCurve EKGCurve;
+    public AnimationCurve EKGCurve_Unhealthy;
 
     [Range(10, 1000)]
     public int Complexity;
@@ -17,18 +18,29 @@ public class EKGController : MonoBehaviour
     [Range(0f, 1f)]
     public float Offset;
 
+    [Range(0f, 10f)]
+    public float EKGHealth;
+    public float EKGMaxHealth = 10;
+
+    //Private
+    private Vector3 _position;
+
     // Start is called before the first frame update
     void Start()
     {
     }
 
-    int posx, posy;
-    Vector3 _position;
 
     // Update is called once per frame
     void Update()
     {
         SetComplexity();
+
+        Offset += Time.deltaTime * Speed;
+        if(Offset > 1)
+        {
+            Offset = 0;
+        }
 
         for(int i = 0; i < EKGLine.positionCount ; i++)
         {
@@ -41,9 +53,11 @@ public class EKGController : MonoBehaviour
 
 
             float posx = i * HorizontalLength;
-            float posy = EKGCurve.Evaluate(time) * Magnitude;
+            float healthyPosY = EKGCurve.Evaluate(time) * Magnitude;
+            float unhealthyPosY = EKGCurve_Unhealthy.Evaluate(time) * Magnitude;
+            float posY = Mathf.Lerp(healthyPosY, unhealthyPosY, EKGHealth / EKGMaxHealth);
 
-            _position = new Vector3(posx, posy, 0);
+            _position = new Vector3(posx, posY, 0);
             EKGLine.SetPosition(i , _position);
         }
     }
