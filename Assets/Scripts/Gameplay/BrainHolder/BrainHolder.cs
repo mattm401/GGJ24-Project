@@ -10,6 +10,7 @@ public class BrainHolder : MonoBehaviour
     public PlayerInteraction PlayerInteraction;
     public string InteractionText = "PLACE BRAIN";
 
+
     private void Update()
     {
         if(_manipulatingBrain)
@@ -19,11 +20,16 @@ public class BrainHolder : MonoBehaviour
 
         if (_latestBrain != null && !_latestBrain.BeingCarried)
         {
-            Debug.Log("Holder grabbing brain");
-            _manipulatingBrain = true;
-            _latestBrain.PickedUp();
-            DisableInteractionText();
+            PickUpBrain();
         }
+    }
+
+    protected virtual void PickUpBrain()
+    {
+        Debug.Log("Holder grabbing brain");
+        _manipulatingBrain = true;
+        _latestBrain.PickedUp();
+        DisableInteractionText();
     }
 
     protected virtual void ManipulateBrainPosition()
@@ -36,6 +42,8 @@ public class BrainHolder : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        if (_manipulatingBrain) return;
+
         if (collision.gameObject.CompareTag("Interactable"))
         {
             var brainController = collision.gameObject.GetComponent<BrainController>();
