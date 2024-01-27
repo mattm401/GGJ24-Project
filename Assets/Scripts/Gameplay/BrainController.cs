@@ -12,6 +12,7 @@ public class BrainController : MonoBehaviour, IGrabbable
     public float MaxHealth = 10f;
     public float Health = 1f;
     public bool BeingCarried;
+    public GameObject BloodDecalReference;
 
     // Start is called before the first frame update
     void Start()
@@ -52,5 +53,17 @@ public class BrainController : MonoBehaviour, IGrabbable
         //Collider.enabled = true;
         BrainRB.useGravity = true;
         Debug.Log("Brain dropped");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        ContactPoint contact = collision.contacts[0]; // Get the first contact point
+
+        Vector3 contactPoint = contact.point;
+        Vector3 contactNormal = contact.normal;
+
+        var bloodDecal = Instantiate(BloodDecalReference);
+        bloodDecal.transform.position = contactPoint + Vector3.up;
+        //bloodDecal.transform.LookAt(contactNormal);
     }
 }
