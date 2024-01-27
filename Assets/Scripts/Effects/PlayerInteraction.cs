@@ -10,8 +10,6 @@ public class PlayerInteraction : MonoBehaviour
     public TextMeshProUGUI InteractTMP;
     private bool _canInteract;
     private bool _canGrab;
-    private bool _isCollidingWithInteractable;
-    private bool _isCollidingWithGrabbable;
     private bool _isGrabbing;
     public Camera PlayerCam;
     public float InteractDistance = 10f;
@@ -36,7 +34,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Start()
     {
-        TrySetCanInteract(false);
+        SetCanInteract(false);
     }
 
     void Update()
@@ -63,23 +61,28 @@ public class PlayerInteraction : MonoBehaviour
                 // Draw a debug line in the scene, color it red
                 Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
 
-                TrySetCanInteract(true);
+                SetCanInteract(true);
             }
             else
             {
-                TrySetCanInteract(false);
+                SetCanInteract(false);
             }
 
-            if (hit.collider.CompareTag("Grabbable"))
+            if (!_isGrabbing)
             {
-                // Draw a debug line in the scene, color it red
-                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
+                if (hit.collider.CompareTag("Grabbable"))
+                {
+                    // Draw a debug line in the scene, color it red
+                    Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
 
-                TrySetCanGrab(true);
-            }
-            else
-            {
-                TrySetCanGrab(true);
+                    _grabbableObject = hit.transform.gameObject;
+                    SetCanGrab(true);
+                }
+                else
+                {
+                    _grabbableObject = null;
+                    SetCanGrab(false);
+                }
             }
 
         }
@@ -87,28 +90,22 @@ public class PlayerInteraction : MonoBehaviour
         {
             // If the ray doesn't hit anything, draw the debug line, color it green
             Debug.DrawRay(ray.origin, ray.direction * InteractDistance, Color.green);
-            TrySetCanInteract(false);
+            SetCanInteract(false);
         }
     }
 
-    private void TrySetCanInteract(bool canInteract)
+    private void SetCanInteract(bool canInteract)
     {
-        if (_isCollidingWithInteractable || !canInteract)
-        {
-            _canInteract = canInteract;
-            InteractTMP.enabled = canInteract;
-            InteractTMP.text = "INTERACT";
-        }
+        _canInteract = canInteract;
+        InteractTMP.enabled = canInteract;
+        InteractTMP.text = "INTERACT";
     }
 
-    private void TrySetCanGrab(bool canGrab)
+    private void SetCanGrab(bool canGrab)
     {
-        if (_isCollidingWithGrabbable || !canGrab)
-        {
-            _canGrab = canGrab;
-            InteractTMP.enabled = canGrab;
-            InteractTMP.text = "GRAB";
-        }
+        _canGrab = canGrab;
+        InteractTMP.enabled = canGrab;
+        InteractTMP.text = "GRAB";
     }
 
     public void InteractButtonPressed(InputAction.CallbackContext context)
@@ -172,45 +169,6 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Interactable"))
-        {
-            _isCollidingWithInteractable = true;
-        }
-        if (other.CompareTag("Grabbable"))
-        {
-            _isCollidingWithGrabbable = true;
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Interactable"))
-        {
-            _isCollidingWithInteractable = true;
-        }
-        if (other.CompareTag("Grabbable"))
-        {
-            _isCollidingWithGrabbable = true;
-            _grabbableObject = other.gameObject;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Interactable"))
-        {
-            TrySetCanInteract(false);
-            _isCollidingWithInteractable = false;
-        }
-        if (other.CompareTag("Grabbable"))
-        {
-            TrySetCanGrab(false);
-            _isCollidingWithGrabbable = false;
-        }
-    }
     void OnEnable()
     {
         Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).Enable();

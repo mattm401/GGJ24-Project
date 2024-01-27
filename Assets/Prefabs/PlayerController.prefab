@@ -612,7 +612,6 @@ GameObject:
   - component: {fileID: 8976429077801165381}
   - component: {fileID: 1954670467235160175}
   - component: {fileID: 3288430196921972946}
-  - component: {fileID: 7193376310388714835}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Player
@@ -807,31 +806,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InteractTMP: {fileID: 5824226712216639830}
   PlayerCam: {fileID: 5910582309053361009}
-  InteractDistance: 10
+  InteractDistance: 2
   Actions: {fileID: -944628639613478452, guid: 648ba62f5f36a04448342f0eec8ef59e, type: 3}
   GrabParent: {fileID: 9089523784250291402}
   GrabFollowSpeed: 10
---- !u!135 &7193376310388714835
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5228422874181618940}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.36
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5301894677972484031
 GameObject:
   m_ObjectHideFlags: 0
