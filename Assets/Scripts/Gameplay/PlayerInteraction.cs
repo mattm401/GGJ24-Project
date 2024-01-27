@@ -21,6 +21,7 @@ public class PlayerInteraction : MonoBehaviour
     public float GrabFollowSpeed = 10f;
 
     private IGrabbable _heldObject;
+    private string _interactInputKey;
 
     private void Awake()
     {
@@ -29,7 +30,9 @@ public class PlayerInteraction : MonoBehaviour
 
     private void HookupInputs()
     {
-        Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).FindAction(InputMap.INTERACT_CONTROL_INPUT_KEY).performed += InteractButtonPressed;
+        InputAction interact = Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).FindAction(InputMap.INTERACT_CONTROL_INPUT_KEY);
+        interact.performed += InteractButtonPressed;
+        _interactInputKey = interact.actionMap.bindings[0].path;
     }
 
     private void Start()
@@ -45,13 +48,15 @@ public class PlayerInteraction : MonoBehaviour
 
     private void TestInteraction()
     {
+        if (_isGrabbing) return;
+
         // Cast a ray from the center of the screen
         Ray ray = PlayerCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         RaycastHit hit;
 
         // Perform the raycast
-        if (!_isGrabbing && Physics.Raycast(ray, out hit, InteractDistance))
+        if (Physics.Raycast(ray, out hit, InteractDistance))
         {
             // If the ray hits a collider, you can do something here
             //Debug.Log("Hit: " + hit.collider.gameObject.name);
@@ -78,11 +83,11 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void SetCanInteract(bool canInteract, string interactDescription = null)
+    public void SetCanInteract(bool canInteract, string interactDescription = null)
     {
         _canInteract = canInteract;
         InteractTMP.enabled = canInteract;
-        InteractTMP.text = interactDescription;
+        SetInteractionText(interactDescription);
     }
 
     public void InteractButtonPressed(InputAction.CallbackContext context)
@@ -92,11 +97,15 @@ public class PlayerInteraction : MonoBehaviour
         {
             Drop();
         }
-
-        if (_canInteract)
+        else 
         {
-            Interact();
+            if (_canInteract)
+            {
+                Interact();
+            }
         }
+
+        
     }
 
     private void Interact()
@@ -118,8 +127,19 @@ public class PlayerInteraction : MonoBehaviour
             {
                 var grabbableScript = script as IGrabbable;
                 Grab(grabbableScript);
+                SetCanInteract(false);
             }
         }
+    }
+
+    public void SetInteractionText(string text)
+    {
+        InteractTMP.text = $"{_interactInputKey} - " + text;
+    }
+
+    public void DisableInteractionText()
+    {
+        InteractTMP.enableAutoSizing = false;
     }
 
     private void Grab(IGrabbable grabbable)

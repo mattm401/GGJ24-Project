@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class BrainHolder : MonoBehaviour
     private BrainController _latestBrain;
     public float BrainLaunchForce = 100f;
     public Color coneColor = Color.yellow;
+    public PlayerInteraction PlayerInteraction;
 
     private void Update()
     {
@@ -23,6 +25,7 @@ public class BrainHolder : MonoBehaviour
             Debug.Log("Holder grabbing brain");
             _holdingBrain = true;
             _latestBrain.PickedUp();
+            DisableInteractionText();
         }
     }
 
@@ -43,6 +46,11 @@ public class BrainHolder : MonoBehaviour
             if (brainController != null)
             {
                 _latestBrain = brainController;
+
+                if(PlayerInteraction != null)
+                {
+                    PlayerInteraction.SetCanInteract(true, "PLACE BRAIN");
+                }
             }
         }
     }
@@ -51,6 +59,15 @@ public class BrainHolder : MonoBehaviour
         if (_latestBrain != null && collision.gameObject == _latestBrain.gameObject)
         {
             _latestBrain = null;
+            DisableInteractionText();
+        }
+    }
+
+    private void DisableInteractionText()
+    {
+        if (PlayerInteraction != null)
+        {
+            PlayerInteraction.SetCanInteract(false);
         }
     }
 
