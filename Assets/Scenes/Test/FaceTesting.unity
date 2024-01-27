@@ -217,6 +217,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &990007797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 990007799}
+  - component: {fileID: 990007798}
+  m_Layer: 0
+  m_Name: FaceHead
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &990007798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990007797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ece67b6b4096346a2623478e6deba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinnedMeshRenderer: {fileID: 1470761009567114317}
+  blendShapeNames:
+  - blendShape2.LipCornerPull
+  - blendShape2.UpperLidRaiser
+  - blendShape2.MouthStretch
+  - blendShape2.LipCornerDepressor
+  - blendShape2.InnerBrownRaiser
+  - blendShape2.EyesClosed
+  - blendShape2.BrowRaiser
+  - blendShape2.BrowLowerer
+  blendShapeValues: []
+--- !u!4 &990007799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990007797}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1968194, y: -0.10113995, z: -9.396884}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6480250921358711732}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1548248817
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +413,7 @@ SkinnedMeshRenderer:
   m_Mesh: {fileID: -335892034270387748, guid: ba4e201abeb870646b161faaa3691216, type: 3}
   m_Bones: []
   m_BlendShapeWeights:
-  - 0
+  - 0.2
   - 0
   - 0
   - 0
@@ -397,11 +453,11 @@ Transform:
   m_GameObject: {fileID: 5955352232932901134}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.00000035762784}
-  m_LocalPosition: {x: -0, y: -1.9237, z: -9.2187}
+  m_LocalPosition: {x: 0.1968194, y: -1.8225601, z: 0.17818356}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 990007799}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!95 &6480250921358711733
 Animator:
@@ -430,4 +486,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1548248820}
   - {fileID: 300474464}
-  - {fileID: 6480250921358711732}
+  - {fileID: 990007799}
