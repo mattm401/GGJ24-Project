@@ -14,16 +14,13 @@ namespace CommandTerminal
             Terminal.Buffer.Clear();
         }
 
-        static string GetListOfCommandAndInfo()
+        public static string GetListOfCommandAndInfo()
         {
             string output = "";
 
             foreach (var command in Terminal.Shell.Commands)
             {
-
                 output += string.Format("{0}: {1}\n", command.Key.PadRight(16), command.Value.help);
-
-                //Terminal.Log("{0}: {1}", command.Key.PadRight(16), command.Value.help);
             }
             
             return output;
