@@ -104,8 +104,6 @@ public class PlayerInteraction : MonoBehaviour
                 Interact();
             }
         }
-
-        
     }
 
     private void Interact()

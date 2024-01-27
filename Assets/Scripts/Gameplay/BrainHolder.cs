@@ -1,35 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BrainHolder : MonoBehaviour
 {
     public Transform BrainHoldTransform;
-    private bool _holdingBrain;
-    private BrainController _latestBrain;
+    private bool _manipulatingBrain;
+    protected BrainController _latestBrain;
     public float BrainLaunchForce = 100f;
     public Color coneColor = Color.yellow;
     public PlayerInteraction PlayerInteraction;
+    public string InteractionText = "PLACE BRAIN";
 
     private void Update()
     {
-        if(_holdingBrain)
+        if(_manipulatingBrain)
         {
-            HoldBrainInPlace();
+            ManipulateBrainPosition();
         }
 
         if (_latestBrain != null && !_latestBrain.BeingCarried)
         {
             Debug.Log("Holder grabbing brain");
-            _holdingBrain = true;
+            _manipulatingBrain = true;
             _latestBrain.PickedUp();
             DisableInteractionText();
         }
     }
 
-    private void HoldBrainInPlace()
+    protected virtual void ManipulateBrainPosition()
     {
         if (_latestBrain != null)
         {
@@ -49,14 +46,14 @@ public class BrainHolder : MonoBehaviour
 
                 if(PlayerInteraction != null)
                 {
-                    PlayerInteraction.SetCanInteract(true, "PLACE BRAIN");
+                    PlayerInteraction.SetCanInteract(true, InteractionText);
                 }
             }
         }
     }
     private void OnTriggerExit(Collider collision)
     {
-        if (_latestBrain != null && collision.gameObject == _latestBrain.gameObject)
+        if (!_manipulatingBrain && _latestBrain != null && collision.gameObject == _latestBrain.gameObject)
         {
             _latestBrain = null;
             DisableInteractionText();
@@ -91,7 +88,7 @@ public class BrainHolder : MonoBehaviour
             _latestBrain.Dropped();
 
             _latestBrain = null;
-            _holdingBrain = false;
+            _manipulatingBrain = false;
         }
     }
 
