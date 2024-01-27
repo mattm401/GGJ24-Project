@@ -15,7 +15,7 @@ public class JellyMesh : MonoBehaviour
     private Vector3[] _vertexArray;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _originalMesh = GetComponent<MeshFilter>().sharedMesh;
         _meshClone = Instantiate(_originalMesh);
