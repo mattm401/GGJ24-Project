@@ -15,6 +15,8 @@ using UnityEngine.UI;
 
 public class TwitchPanel : MonoBehaviour
 {
+    private static TwitchPanel Instance = null;
+    
     #region Link
 
     [Foldout("Link")] public GameObject gameObjectMainPanel;
@@ -33,7 +35,7 @@ public class TwitchPanel : MonoBehaviour
     #endregion
 
     #region Settings
-    
+    [BoxGroup("Setting")] public bool autoConnect = false;
     [BoxGroup("Setting")] public bool isUsingTimerAndCounter = false;
     [BoxGroup("Setting")] public float timerInterval = 5.0f;
     
@@ -42,6 +44,17 @@ public class TwitchPanel : MonoBehaviour
     #region Private Var
     
     private Terminal _terminal;
+
+    private Terminal GetTerminal()
+    {
+        if (_terminal == null)
+        {
+            _terminal = FindFirstObjectByType<Terminal>();
+        }
+
+        return _terminal;
+    }
+    
     private bool _sendHelpCommand = false;
     private Dictionary<string, int> _dictionaryCommandCount = new Dictionary<string, int>();
   
@@ -49,6 +62,11 @@ public class TwitchPanel : MonoBehaviour
 
     #region callback
 
+    public void OnButtonClickToggle()
+    {
+        gameObjectMainPanel.SetActive(!gameObjectMainPanel.activeSelf);
+    }
+    
     public void OnButtonClickConnect()
     {
         buttonConnect.interactable = false;
@@ -113,15 +131,23 @@ public class TwitchPanel : MonoBehaviour
     private void FireHelpCommand()
     {
         string message = BuiltinCommands.GetListOfCommandAndInfo();
-        TwitchChatClient.instance.SendChatMessage($"Enter these command:\n{message}");
-        _terminal.EnterCommand("help");
+        TwitchChatClient.instance.SendChatMessage("Chat Commands:");
+        
+        //have to send each one because twitch message doesn't support newline.
+        foreach (var command in Terminal.Shell.Commands)
+        {
+            TwitchChatClient.instance.SendChatMessage(string.Format("{0}: {1}\n", command.Key.PadRight(16), command.Value.help));
+        }
+        
+        
+        GetTerminal().EnterCommand("help");
     }
 
     private void ShowMessage(TwitchChatMessage chatMessage)
     {
         if (isUsingTimerAndCounter == false)
         {
-            _terminal.EnterCommand(chatMessage.Message);
+            GetTerminal().EnterCommand(chatMessage.Message);
         }
         else
         {
@@ -152,11 +178,36 @@ public class TwitchPanel : MonoBehaviour
 
     private void Awake()
     {
-        _terminal = FindFirstObjectByType<Terminal>();
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void Start()
+    {
+        if (Instance != this)
+        {
+            return;
+        }
+            
+        if (autoConnect)
+        {
+            OnButtonClickConnect();
+        }
     }
 
     private void OnEnable()
     {
+        if (Instance != this)
+        {
+            return;
+        }
+        
         if (isUsingTimerAndCounter == true)
         {
             StartCoroutine(EnterCommandAtInterval());
@@ -165,6 +216,11 @@ public class TwitchPanel : MonoBehaviour
 
     private void OnDisable()
     {
+        if (Instance != this)
+        {
+            return;
+        }
+        
         StopAllCoroutines();
     }
 
@@ -204,7 +260,7 @@ public class TwitchPanel : MonoBehaviour
             //if we have something to fire then fire it.
             if (string.IsNullOrEmpty(commandToFire) == false)
             {
-                _terminal.EnterCommand(commandToFire);
+                GetTerminal().EnterCommand(commandToFire);
             }
         }
         
