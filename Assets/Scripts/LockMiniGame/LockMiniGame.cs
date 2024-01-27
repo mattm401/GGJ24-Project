@@ -1,5 +1,6 @@
 using System.Collections;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,13 @@ namespace Assets.Scripts.LockMiniGame
         public GameObject DisplayCanvas;
 
         private readonly bool _debug = false;
+        
+        private readonly float _lockRotationSpeed = 4.0f;
+        
+        private const float FadeTime = 1.0f;
+        private const float HealthOn = 1.0f;
+        private const float HealthOff = 0.0f;
+        private const float HealthFillRate = 0.001f;
         private bool _displayActive;
         private Image _border;
         private Image _background;
@@ -34,17 +42,15 @@ namespace Assets.Scripts.LockMiniGame
         [UsedImplicitly]
         void Update()
         {
-            
-
             // Visibility of health bar UI based on mouse interaction
             if (Input.GetMouseButtonDown(0) && _health.color.a <= 1.0f)
             {
                 if (_debug) Debug.Log("Mouse Down");
                 
                 _displayActive = true;
-                StartCoroutine(FadeTo(_border, 1.0f, 1.0f));
-                StartCoroutine(FadeTo(_background, 1.0f, 1.0f));
-                StartCoroutine(FadeTo(_health, 1.0f, 1.0f));
+                StartCoroutine(FadeTo(_border, HealthOn, FadeTime));
+                StartCoroutine(FadeTo(_background, HealthOn, FadeTime));
+                StartCoroutine(FadeTo(_health, HealthOn, FadeTime));
             }
         
             if (Input.GetMouseButtonUp(0) && _health.color.a != 0.0f)
@@ -52,9 +58,9 @@ namespace Assets.Scripts.LockMiniGame
                 if (_debug) Debug.Log("Mouse Up");
     
                 _displayActive = false;
-                StartCoroutine(FadeTo(_border, 0.0f, 1.0f));
-                StartCoroutine(FadeTo(_background, 0.0f, 1.0f));
-                StartCoroutine(FadeTo(_health, 0.0f, 1.0f));
+                StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
+                StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
+                StartCoroutine(FadeTo(_health, HealthOff, FadeTime));
             }
 
             // Determine how to change value of health bar
@@ -62,7 +68,7 @@ namespace Assets.Scripts.LockMiniGame
             {
                 if (_health.fillAmount < 1.0f)
                 {
-                    _health.fillAmount += 0.001f;
+                    _health.fillAmount += HealthFillRate;
                 }
                 else
                 {
@@ -72,6 +78,20 @@ namespace Assets.Scripts.LockMiniGame
                         LockTarget.transform.Find("EventSystem/ElectricitySphere").gameObject.SetActive(true);
                     }
                 }
+
+                // Get the current mouse position
+                float mouseX = Input.GetAxis("Mouse X");
+                float mouseY = Input.GetAxis("Mouse Y");
+
+                // Rotate the object around its y-axis
+                LockTarget.transform.Rotate(new Vector3(0, mouseY * _lockRotationSpeed, 0));
+
+                // Rotate the object around its x-axis
+                LockTarget.transform.Rotate(new Vector3(-mouseX * _lockRotationSpeed, 0, 0));
+
+                // Place the object in front of the camera
+                LockTarget.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 10.0f;
+
             }
             else
             {
@@ -83,7 +103,7 @@ namespace Assets.Scripts.LockMiniGame
 
                 if (_health.fillAmount > 0.0f)
                 {
-                    _health.fillAmount -= 0.001f;
+                    _health.fillAmount -= HealthFillRate;
                 }
             }
         }
