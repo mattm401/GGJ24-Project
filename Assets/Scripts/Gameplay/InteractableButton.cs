@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Button : MonoBehaviour, IInteractable
+public class InteractableButton : MonoBehaviour, IInteractable
 {
     public UnityEvent ButtonEvent;
 
