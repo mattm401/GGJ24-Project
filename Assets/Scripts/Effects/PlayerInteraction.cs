@@ -9,12 +9,20 @@ public class PlayerInteraction : MonoBehaviour
 {
     public TextMeshProUGUI InteractTMP;
     private bool _canInteract;
+    private bool _canGrab;
     private bool _isCollidingWithInteractable;
+    private bool _isCollidingWithGrabbable;
     private bool _isGrabbing;
     public Camera PlayerCam;
     public float InteractDistance = 10f;
 
     public InputActionAsset Actions;
+
+    public Transform GrabParent;
+
+    private GameObject _interactableObject;
+    private GameObject _grabbableObject;
+    public float GrabFollowSpeed = 10f;
 
     private void Awake()
     {
@@ -34,6 +42,7 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
         TestInteraction();
+        HoldGrabbbableInPlace();
     }
 
     private void TestInteraction()
@@ -61,6 +70,18 @@ public class PlayerInteraction : MonoBehaviour
                 TrySetCanInteract(false);
             }
 
+            if (hit.collider.CompareTag("Grabbable"))
+            {
+                // Draw a debug line in the scene, color it red
+                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
+
+                TrySetCanGrab(true);
+            }
+            else
+            {
+                TrySetCanGrab(true);
+            }
+
         }
         else
         {
@@ -76,40 +97,79 @@ public class PlayerInteraction : MonoBehaviour
         {
             _canInteract = canInteract;
             InteractTMP.enabled = canInteract;
+            InteractTMP.text = "INTERACT";
+        }
+    }
+
+    private void TrySetCanGrab(bool canGrab)
+    {
+        if (_isCollidingWithGrabbable || !canGrab)
+        {
+            _canGrab = canGrab;
+            InteractTMP.enabled = canGrab;
+            InteractTMP.text = "GRAB";
         }
     }
 
     public void InteractButtonPressed(InputAction.CallbackContext context)
     {
         Debug.Log("Interact button pressed");
-        if (!_isGrabbing)
-        {
-            TryGrab();
-        }
-        else
+        if (_isGrabbing)
         {
             Drop();
         }
+        else if (!_isGrabbing && _canGrab)
+        {
+            Grab();
+        }
+
+        if (_canInteract)
+        {
+            Interact();
+        }
     }
 
-    public void TryGrab()
+    private void Interact()
     {
-        if (!_canInteract)
-        {
-            Debug.Log("Nothing to grab!");
-        }
-        else
-        {
-            Debug.Log("You just Grabbed something!");
-            _isGrabbing = true;
-        }
+        Debug.Log("You just interacted something!");
+    }
 
+    private void Grab()
+    {
+        Debug.Log("You just Grabbed something!");
+        _isGrabbing = true;
+        _grabbableObject.transform.SetParent(GrabParent);
+        _grabbableObject.transform.position = GrabParent.position;
+
+        Rigidbody grabbableRB = _grabbableObject.GetComponent<Rigidbody>();
+
+        if (grabbableRB != null) 
+        {
+            grabbableRB.useGravity = false;
+        }
+    }
+
+    private void HoldGrabbbableInPlace()
+    {
+        if (_grabbableObject != null && _isGrabbing)
+        {
+            _grabbableObject.transform.position = Vector3.MoveTowards(_grabbableObject.transform.position, GrabParent.transform.position, Time.deltaTime * GrabFollowSpeed);
+        }
     }
 
     public void Drop()
     {
         Debug.Log("You just Dropped something!");
         _isGrabbing = false;
+
+        _grabbableObject.transform.SetParent(null); //sets back to root scene
+
+        Rigidbody grabbableRB = _grabbableObject.GetComponent<Rigidbody>();
+
+        if (grabbableRB != null)
+        {
+            grabbableRB.useGravity = true;
+        }
     }
 
 
@@ -119,6 +179,10 @@ public class PlayerInteraction : MonoBehaviour
         {
             _isCollidingWithInteractable = true;
         }
+        if (other.CompareTag("Grabbable"))
+        {
+            _isCollidingWithGrabbable = true;
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -126,6 +190,11 @@ public class PlayerInteraction : MonoBehaviour
         if (other.CompareTag("Interactable"))
         {
             _isCollidingWithInteractable = true;
+        }
+        if (other.CompareTag("Grabbable"))
+        {
+            _isCollidingWithGrabbable = true;
+            _grabbableObject = other.gameObject;
         }
     }
 
@@ -135,6 +204,11 @@ public class PlayerInteraction : MonoBehaviour
         {
             TrySetCanInteract(false);
             _isCollidingWithInteractable = false;
+        }
+        if (other.CompareTag("Grabbable"))
+        {
+            TrySetCanGrab(false);
+            _isCollidingWithGrabbable = false;
         }
     }
     void OnEnable()
