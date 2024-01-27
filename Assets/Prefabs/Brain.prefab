@@ -121,9 +121,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c2d93d8cbc91214b9009c99d2b787e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 5005819873102214261}
   BrainRB: {fileID: 3056091497082217375}
   DebugBounceForce: 100
   DebugBounceTest: 0
+  MaxHealth: 10
+  Health: 1
+  BeingCarried: 0
 --- !u!54 &3056091497082217375
 Rigidbody:
   m_ObjectHideFlags: 0

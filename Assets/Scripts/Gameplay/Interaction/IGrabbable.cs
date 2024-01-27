@@ -4,4 +4,6 @@ using UnityEngine;
 
 public interface IGrabbable 
 {
+    void PickedUp();
+    void Dropped();
 }
