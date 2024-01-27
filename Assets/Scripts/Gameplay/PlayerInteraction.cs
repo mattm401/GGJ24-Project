@@ -20,6 +20,8 @@ public class PlayerInteraction : MonoBehaviour
     private GameObject _interactableObject;
     public float GrabFollowSpeed = 10f;
 
+    private IGrabbable _heldObject;
+
     private void Awake()
     {
         HookupInputs();
@@ -52,7 +54,7 @@ public class PlayerInteraction : MonoBehaviour
         if (!_isGrabbing && Physics.Raycast(ray, out hit, InteractDistance))
         {
             // If the ray hits a collider, you can do something here
-            Debug.Log("Hit: " + hit.collider.gameObject.name);
+            //Debug.Log("Hit: " + hit.collider.gameObject.name);
 
             if (hit.collider.CompareTag("Interactable"))
             {
@@ -114,17 +116,21 @@ public class PlayerInteraction : MonoBehaviour
             //TODO I don't like this workflow necessarily... grabbable objects should either be in charge of how they are grabbed, or "interactable" should be a class derived from monobehavior, i.e. the grabbing happens as part of "Interact()".
             if(script is IGrabbable)
             {
-                Grab();
+                var grabbableScript = script as IGrabbable;
+                Grab(grabbableScript);
             }
         }
     }
 
-    private void Grab()
+    private void Grab(IGrabbable grabbable)
     {
         Debug.Log("You just Grabbed something!");
         _isGrabbing = true;
         _interactableObject.transform.SetParent(GrabParent);
         _interactableObject.transform.position = GrabParent.position;
+
+        _heldObject = grabbable;
+        grabbable.PickedUp();
 
         Rigidbody grabbableRB = _interactableObject.GetComponent<Rigidbody>();
 
@@ -148,6 +154,11 @@ public class PlayerInteraction : MonoBehaviour
         _isGrabbing = false;
 
         _interactableObject.transform.SetParent(null); //sets back to root scene
+
+        if(_heldObject != null)
+        {
+            _heldObject.Dropped();
+        }
 
         Rigidbody grabbableRB = _interactableObject.GetComponent<Rigidbody>();
 
