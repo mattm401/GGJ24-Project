@@ -128,6 +128,7 @@ MonoBehaviour:
   MaxHealth: 10
   Health: 1
   BeingCarried: 0
+  BloodDecalReference: {fileID: 4251869334307872706, guid: 9b93d4b93bcd27d4aad8dc4feb613431, type: 3}
 --- !u!54 &3056091497082217375
 Rigidbody:
   m_ObjectHideFlags: 0
