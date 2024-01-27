@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrainController : MonoBehaviour
+public class BrainController : MonoBehaviour, IGrabbable
 {
     public Rigidbody BrainRB;
     public float DebugBounceForce = 10f;

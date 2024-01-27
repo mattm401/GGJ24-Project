@@ -9,7 +9,6 @@ public class PlayerInteraction : MonoBehaviour
 {
     public TextMeshProUGUI InteractTMP;
     private bool _canInteract;
-    private bool _canGrab;
     private bool _isGrabbing;
     public Camera PlayerCam;
     public float InteractDistance = 10f;
@@ -19,7 +18,6 @@ public class PlayerInteraction : MonoBehaviour
     public Transform GrabParent;
 
     private GameObject _interactableObject;
-    private GameObject _grabbableObject;
     public float GrabFollowSpeed = 10f;
 
     private void Awake()
@@ -51,7 +49,7 @@ public class PlayerInteraction : MonoBehaviour
         RaycastHit hit;
 
         // Perform the raycast
-        if (Physics.Raycast(ray, out hit, InteractDistance))
+        if (!_isGrabbing && Physics.Raycast(ray, out hit, InteractDistance))
         {
             // If the ray hits a collider, you can do something here
             Debug.Log("Hit: " + hit.collider.gameObject.name);
@@ -60,31 +58,15 @@ public class PlayerInteraction : MonoBehaviour
             {
                 // Draw a debug line in the scene, color it red
                 Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
-
-                SetCanInteract(true);
+                _interactableObject = hit.transform.gameObject;
+                string interactDescription = hit.transform.name;
+                SetCanInteract(true, interactDescription);
             }
             else
             {
+                _interactableObject = null;
                 SetCanInteract(false);
             }
-
-            if (!_isGrabbing)
-            {
-                if (hit.collider.CompareTag("Grabbable"))
-                {
-                    // Draw a debug line in the scene, color it red
-                    Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
-
-                    _grabbableObject = hit.transform.gameObject;
-                    SetCanGrab(true);
-                }
-                else
-                {
-                    _grabbableObject = null;
-                    SetCanGrab(false);
-                }
-            }
-
         }
         else
         {
@@ -94,18 +76,11 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void SetCanInteract(bool canInteract)
+    private void SetCanInteract(bool canInteract, string interactDescription = null)
     {
         _canInteract = canInteract;
         InteractTMP.enabled = canInteract;
-        InteractTMP.text = "INTERACT";
-    }
-
-    private void SetCanGrab(bool canGrab)
-    {
-        _canGrab = canGrab;
-        InteractTMP.enabled = canGrab;
-        InteractTMP.text = "GRAB";
+        InteractTMP.text = interactDescription;
     }
 
     public void InteractButtonPressed(InputAction.CallbackContext context)
@@ -114,10 +89,6 @@ public class PlayerInteraction : MonoBehaviour
         if (_isGrabbing)
         {
             Drop();
-        }
-        else if (!_isGrabbing && _canGrab)
-        {
-            Grab();
         }
 
         if (_canInteract)
@@ -128,17 +99,34 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Interact()
     {
-        Debug.Log("You just interacted something!");
+        var allScriptOnObject = _interactableObject.GetComponents<MonoBehaviour>();
+
+        foreach(var script in allScriptOnObject) 
+        {
+            if(script is IInteractable)
+            {
+                var interactableScript = script as IInteractable;
+                interactableScript.Interact();
+
+                Debug.Log("You just interacted something!");
+            }
+
+            //TODO I don't like this workflow necessarily... grabbable objects should either be in charge of how they are grabbed, or "interactable" should be a class derived from monobehavior, i.e. the grabbing happens as part of "Interact()".
+            if(script is IGrabbable)
+            {
+                Grab();
+            }
+        }
     }
 
     private void Grab()
     {
         Debug.Log("You just Grabbed something!");
         _isGrabbing = true;
-        _grabbableObject.transform.SetParent(GrabParent);
-        _grabbableObject.transform.position = GrabParent.position;
+        _interactableObject.transform.SetParent(GrabParent);
+        _interactableObject.transform.position = GrabParent.position;
 
-        Rigidbody grabbableRB = _grabbableObject.GetComponent<Rigidbody>();
+        Rigidbody grabbableRB = _interactableObject.GetComponent<Rigidbody>();
 
         if (grabbableRB != null) 
         {
@@ -148,9 +136,9 @@ public class PlayerInteraction : MonoBehaviour
 
     private void HoldGrabbbableInPlace()
     {
-        if (_grabbableObject != null && _isGrabbing)
+        if (_interactableObject != null && _isGrabbing)
         {
-            _grabbableObject.transform.position = Vector3.MoveTowards(_grabbableObject.transform.position, GrabParent.transform.position, Time.deltaTime * GrabFollowSpeed);
+            _interactableObject.transform.position = Vector3.MoveTowards(_interactableObject.transform.position, GrabParent.transform.position, Time.deltaTime * GrabFollowSpeed);
         }
     }
 
@@ -159,9 +147,9 @@ public class PlayerInteraction : MonoBehaviour
         Debug.Log("You just Dropped something!");
         _isGrabbing = false;
 
-        _grabbableObject.transform.SetParent(null); //sets back to root scene
+        _interactableObject.transform.SetParent(null); //sets back to root scene
 
-        Rigidbody grabbableRB = _grabbableObject.GetComponent<Rigidbody>();
+        Rigidbody grabbableRB = _interactableObject.GetComponent<Rigidbody>();
 
         if (grabbableRB != null)
         {
