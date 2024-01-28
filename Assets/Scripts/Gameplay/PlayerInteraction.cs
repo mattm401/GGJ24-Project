@@ -32,7 +32,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         InputAction interact = Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).FindAction(InputMap.INTERACT_CONTROL_INPUT_KEY);
         interact.performed += InteractButtonPressed;
-        _interactInputKey = interact.actionMap.bindings[0].path;
+        _interactInputKey = interact.bindings[0].path;
     }
 
     private void Start()

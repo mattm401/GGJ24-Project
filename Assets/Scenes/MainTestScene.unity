@@ -4672,11 +4672,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3532247601362943488, guid: 48c9ad4a53703e143b44e552fac84e0f, type: 3}
   m_PrefabInstance: {fileID: 502785865}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &502785867 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6125655974743774729, guid: 48c9ad4a53703e143b44e552fac84e0f, type: 3}
-  m_PrefabInstance: {fileID: 502785865}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &514377341
 GameObject:
   m_ObjectHideFlags: 0
@@ -12455,7 +12450,7 @@ PrefabInstance:
     - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
       propertyPath: DisplayCanvas
       value: 
-      objectReference: {fileID: 502785867}
+      objectReference: {fileID: 0}
     - target: {fileID: 9018029731238052418, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
       propertyPath: m_Name
       value: Mini Game Camera
@@ -18931,7 +18926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2114989707
 Transform:
   m_ObjectHideFlags: 0
