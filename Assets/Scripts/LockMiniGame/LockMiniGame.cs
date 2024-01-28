@@ -10,6 +10,9 @@ namespace Assets.Scripts.LockMiniGame
     {
         public GameObject LockTarget;
         public GameObject DisplayCanvas;
+        public AudioClip laughClip;
+        public AudioSource audioSource;
+        
 
         public SkinnedMeshRenderer skinnedMeshRenderer; //MeshRenderer for Face
         public string[] blendShapeNames; // Names of face blendshapes
@@ -98,15 +101,16 @@ namespace Assets.Scripts.LockMiniGame
                         switch (LockTarget.GetComponent<LockObject>().GetNodeNumber())
                         {
                             case 1:
-                                SetFaceDistortion(1);
+                                SetFaceDistortion(0);
                                 _currBrain.GetComponent<BrainController>().Node1Score = 1;
                                 break;
                             case 2:
-                                SetFaceDistortion(2);
+                                SetFaceDistortion(1);
+                                SetFaceDistortion(7);
                                 _currBrain.GetComponent<BrainController>().Node2Score = 1;
                                 break;
                             case 3:
-                                SetFaceDistortion(3);
+                                SetFaceDistortion(2);
                                 _currBrain.GetComponent<BrainController>().Node3Score = 1;
                                 break;
                             case 4:
@@ -127,19 +131,24 @@ namespace Assets.Scripts.LockMiniGame
                         }
                         if (winCondition)
                         {
-                            for (var i = 0; i < locks.Length; i++)
+                            playLaugh();
+                            if (Input.GetKeyDown(KeyCode.Escape))
                             {
-                                locks[i].transform.Find("ElectricitySphere").gameObject.SetActive(false);
-                                locks[i].GetComponentInChildren<LockObject>().SetCurrentLevel(0.3f);
-                                locks[i].GetComponentInChildren<LockObject>().ResetGame();
-                            }
+                                for (var i = 0; i < locks.Length; i++)
+                                {
+                                    locks[i].transform.Find("ElectricitySphere").gameObject.SetActive(false);
+                                    locks[i].GetComponentInChildren<LockObject>().SetCurrentLevel(0.3f);
+                                    locks[i].GetComponentInChildren<LockObject>().ResetGame();
+                                }
 
-                            _currBrain = null;
-                            _displayActive = false;
-                            StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
-                            StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
-                            StartCoroutine(FadeTo(_health, HealthOff, FadeTime));
-                            GameManager.Instance.TurnOffMiniGame();
+                                _currBrain = null;
+                                _displayActive = false;
+                                StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
+                                StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
+                                StartCoroutine(FadeTo(_health, HealthOff, FadeTime));
+                                GameManager.Instance.TurnOffMiniGame();
+                            }
+                            
                         }
                     }
                 }
@@ -307,6 +316,21 @@ namespace Assets.Scripts.LockMiniGame
             for (int i = 0; i < blendShapeValues.Length; i++)
             {
                 skinnedMeshRenderer.SetBlendShapeWeight(i, blendShapeValues[i]);
+            }
+        }
+
+        private void playLaugh()
+        {
+            
+            if (audioSource != null && laughClip != null)
+            {
+                audioSource.clip = laughClip;
+                audioSource.volume = 0.5f;
+                audioSource.Play();
+            }
+            else
+            {
+                if(_andyDebug)Debug.LogError("LaughAudio AudioSource and/or laugh clip not found!");
             }
         }
 
