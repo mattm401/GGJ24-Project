@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     // Singleton instance
     private static GameManager _instance;
     public GameObject PlayerController;
+    public GameObject MiniGame;
+
     public TextMeshProUGUI ScoreUI;
 
     private List<double> _brainScores;
     private double _currOveralScore;
+
+    public bool MiniGameOn;
+    public InputActionAsset Actions;
+    private string _exitInputKey;
+    public TextMeshProUGUI MiniGameEscapeText;
 
     // Public property to access the singleton instance
     public static GameManager Instance
@@ -39,6 +47,8 @@ public class GameManager : MonoBehaviour
     // Ensure the instance is properly initialized even if it's not created via Instance property
     private void Awake()
     {
+        Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).Enable();
+
         if (_instance == null)
         {
             _instance = this;
@@ -50,12 +60,56 @@ public class GameManager : MonoBehaviour
         }
 
         _brainScores = new List<double>();
+
+        HookupInputs();
+
+        TurnOffMiniGame();
+    }
+
+    private void HookupInputs()
+    {
+        InputAction exit = Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).FindAction(InputMap.ESCAPE_CONTROL_INPUT_KEY);
+        exit.performed += ExitButtonPressed;
+        _exitInputKey = exit.bindings[0].path;
+    }
+
+    public void ExitButtonPressed(InputAction.CallbackContext context)
+    {
+        Debug.Log("Escape button pressed");
+        if (MiniGameOn)
+        {
+            TurnOffMiniGame();
+        }
+    }
+
+    public void TurnOnMiniGame()
+    {
+        Debug.Log("Mini game ON");
+        SetPlayerEnabled(false);
+        SetMiniGameEnabled(true);
+        Cursor.lockState = CursorLockMode.None;
+        MiniGameOn = true;
+        MiniGameEscapeText.text = $"{_exitInputKey} - EXIT MINIGAME";
+    }
+
+    public void TurnOffMiniGame()
+    {
+        Debug.Log("Mini game OFF");
+        SetPlayerEnabled(true);
+        SetMiniGameEnabled(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        MiniGameOn = false;
     }
 
     // Example method to start the game
     public void SetPlayerEnabled(bool enabled)
     {
         PlayerController.SetActive(enabled);
+    }
+
+    public void SetMiniGameEnabled(bool enabled)
+    {
+        MiniGame.SetActive(enabled);
     }
 
     public void RegisterBrainScore(double score)

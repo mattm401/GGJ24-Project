@@ -10,12 +10,12 @@ public class BrainHolderMiniGame : BrainHolder
     protected override void PickUpBrain()
     {
         base.PickUpBrain();
+        GameManager.Instance.TurnOnMiniGame();
+    }
 
-
-        if (DebugTestDisablePlayerWhenHoldingBrain)
-        {
-            GameManager.Instance.SetPlayerEnabled(false);
-        }
+    public override void ReleaseBrain()
+    {
+        base.ReleaseBrain();
     }
 
     protected override void ManipulateBrainPosition()

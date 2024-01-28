@@ -188,10 +188,10 @@ public class PlayerInteraction : MonoBehaviour
 
     void OnEnable()
     {
-        Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).Enable();
+        //Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).Enable();
     }
     void OnDisable()
     {
-        Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).Disable();
+        //Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).Disable();
     }
 }
