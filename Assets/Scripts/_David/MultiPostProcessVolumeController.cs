@@ -17,7 +17,7 @@ public class MultiPostProcessVolumeController : MonoBehaviour
         Terminal.Shell.AddCommand("blackout", BlackOut, 0, 999, "Who turn off the lights?");   
         Terminal.Shell.AddCommand("bloom", ShowBloom, 0, 999, "That's bright");   
         Terminal.Shell.AddCommand("spots", Spots, 0, 999, "Looked into the sun too much");   
-        Terminal.Shell.AddCommand("3d", Aberration, 0, 999, "Looks 2D to me");   
+        Terminal.Shell.AddCommand("threed", Aberration, 0, 999, "Looks 2D to me");   
         Terminal.Shell.AddCommand("noglasses", NoGlasses, 0, 999, "Blind without them");   
         
     }
