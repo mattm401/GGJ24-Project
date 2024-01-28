@@ -16,6 +16,7 @@ public class BrainController : MonoBehaviour, IGrabbable
     public AudioSource ImpactSound;
 
     public float Node1Score, Node2Score, Node3Score, Node4Score;
+    public bool Node1Works, Node2Works, Node3Works, Node4Works = true;
 
     public void RegisterRating()
     {

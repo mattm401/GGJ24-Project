@@ -68,7 +68,7 @@ namespace Assets.Scripts.LockMiniGame
             UpdateLockDisplayBar();
 
             // Determine how to change value of health bar
-            if (_displayActive)
+            if (_displayActive && !LockTarget.GetComponent<LockObject>().getLocked())
             {
                 // Override mouse position for screen position (for testing purposes)
                 var mousePosNew = Input.mousePosition;
@@ -89,6 +89,21 @@ namespace Assets.Scripts.LockMiniGame
                 {
                     _health.fillAmount += HealthFillRate;
                     LockTarget.GetComponentInChildren<LockObject>().SetCurrentLevel(_health.fillAmount);
+                    switch (LockTarget.GetComponent<LockObject>().GetNodeNumber())
+                    {
+                        case 1:
+                            _currBrain.GetComponent<BrainController>().Node1Score = _health.fillAmount;
+                            break;
+                        case 2:
+                            _currBrain.GetComponent<BrainController>().Node2Score = _health.fillAmount;
+                            break;
+                        case 3:
+                            _currBrain.GetComponent<BrainController>().Node3Score = _health.fillAmount;
+                            break;
+                        case 4:
+                            _currBrain.GetComponent<BrainController>().Node4Score = _health.fillAmount;
+                            break;
+                    }
                 }
                 else if (_health.fillAmount >= 1.0f && mouseX > xLeft && mouseX < xRight && mouseY > yLeft && mouseY < yRight)
                 {
@@ -103,19 +118,23 @@ namespace Assets.Scripts.LockMiniGame
                             case 1:
                                 SetFaceDistortion(0);
                                 _currBrain.GetComponent<BrainController>().Node1Score = 1;
+                                _currBrain.GetComponent<BrainController>().Node1Works = false;
                                 break;
                             case 2:
                                 SetFaceDistortion(1);
                                 SetFaceDistortion(7);
                                 _currBrain.GetComponent<BrainController>().Node2Score = 1;
+                                _currBrain.GetComponent<BrainController>().Node2Works = false;
                                 break;
                             case 3:
                                 SetFaceDistortion(2);
                                 _currBrain.GetComponent<BrainController>().Node3Score = 1;
+                                _currBrain.GetComponent<BrainController>().Node3Works = false;
                                 break;
                             case 4:
                                 SetFaceDistortion(4);
                                 _currBrain.GetComponent<BrainController>().Node4Score = 1;
+                                _currBrain.GetComponent<BrainController>().Node4Works = false;
                                 break;
                         }
 
@@ -156,6 +175,29 @@ namespace Assets.Scripts.LockMiniGame
                 {
                     _health.fillAmount -= HealthDefillRate;
                     LockTarget.GetComponentInChildren<LockObject>().SetCurrentLevel(_health.fillAmount);
+                    if (_health.fillAmount <= 0.0f)
+                    {
+                        LockTarget.GetComponentInChildren<LockObject>().setLocked(true);
+                        switch (LockTarget.GetComponent<LockObject>().GetNodeNumber())
+                        {
+                            case 1:
+                                _currBrain.GetComponent<BrainController>().Node1Score = _health.fillAmount;
+                                _currBrain.GetComponent<BrainController>().Node1Works = false;
+                                break;
+                            case 2:
+                                _currBrain.GetComponent<BrainController>().Node2Score = _health.fillAmount;
+                                _currBrain.GetComponent<BrainController>().Node2Works = false;
+                                break;
+                            case 3:
+                                _currBrain.GetComponent<BrainController>().Node3Score = _health.fillAmount;
+                                _currBrain.GetComponent<BrainController>().Node3Works = false;
+                                break;
+                            case 4:
+                                _currBrain.GetComponent<BrainController>().Node4Score = _health.fillAmount;
+                                _currBrain.GetComponent<BrainController>().Node4Works = false;
+                                break;
+                        }
+                    }
                 }
             }
             UpdateFace();
@@ -211,6 +253,10 @@ namespace Assets.Scripts.LockMiniGame
                 {
                     LockTarget = hit.collider.gameObject;
                     _health.fillAmount = LockTarget.GetComponent<LockObject>().GetCurrentLevel();
+                    if (_health.fillAmount == 1.0f && !LockTarget.transform.Find("ElectricitySphere").gameObject.activeSelf)
+                    {
+                        LockTarget.transform.Find("ElectricitySphere").gameObject.SetActive(true);
+                    }
                     _mouseOverSphere = true;
                 }
                 else
@@ -362,10 +408,10 @@ namespace Assets.Scripts.LockMiniGame
 
             if (_currBrain != null)
             {
-                _currBrain.GetComponent<BrainController>().Node1Score = 0;
-                _currBrain.GetComponent<BrainController>().Node2Score = 0;
-                _currBrain.GetComponent<BrainController>().Node3Score = 0;
-                _currBrain.GetComponent<BrainController>().Node4Score = 0;
+                //_currBrain.GetComponent<BrainController>().Node1Score = 0;
+                //_currBrain.GetComponent<BrainController>().Node2Score = 0;
+                //_currBrain.GetComponent<BrainController>().Node3Score = 0;
+                //_currBrain.GetComponent<BrainController>().Node4Score = 0;
             }
         }
     }

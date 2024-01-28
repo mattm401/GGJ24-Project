@@ -2011,7 +2011,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c855f778490fd484798397d860dd0d6f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2024,9 +2024,9 @@ AudioSource:
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 1
-  BypassListenerEffects: 1
-  BypassReverbZones: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -20699,6 +20699,22 @@ PrefabInstance:
     - target: {fileID: 4716282496721304784, guid: fb94745e4d170a246afaed22f8485428, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073085047194216470, guid: fb94745e4d170a246afaed22f8485428, type: 3}
+      propertyPath: Node1Works
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073085047194216470, guid: fb94745e4d170a246afaed22f8485428, type: 3}
+      propertyPath: Node2Works
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073085047194216470, guid: fb94745e4d170a246afaed22f8485428, type: 3}
+      propertyPath: Node3Works
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073085047194216470, guid: fb94745e4d170a246afaed22f8485428, type: 3}
+      propertyPath: Node4Works
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8766924885123941339, guid: fb94745e4d170a246afaed22f8485428, type: 3}
       propertyPath: m_Name

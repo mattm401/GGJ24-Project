@@ -11,6 +11,7 @@ namespace Assets.Scripts.LockMiniGame
         private Vector3 _originPos;
         private Quaternion _originRot;
         private int node_number;
+        private bool isLocked;
 
         // Start is called before the first frame update
         [UsedImplicitly]
@@ -47,10 +48,6 @@ namespace Assets.Scripts.LockMiniGame
         
         }
 
-        public void SetLocked(bool locked)
-        {
-        }
-
         public float GetCurrentLevel()
         {
             return _currentLevel;
@@ -74,11 +71,22 @@ namespace Assets.Scripts.LockMiniGame
             _yRange = Random.Range(-65.0f, 65.0f);
             transform.position = _originPos;
             transform.rotation = _originRot;
+            isLocked = false;
         }
 
         public int GetNodeNumber()
         {
             return node_number;
+        }
+
+        public void setLocked(bool val)
+        {
+            isLocked = val;
+        }
+
+        public bool getLocked()
+        {
+            return isLocked;
         }
 
     }
