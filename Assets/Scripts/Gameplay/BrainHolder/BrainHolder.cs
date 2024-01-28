@@ -38,6 +38,7 @@ public class BrainHolder : MonoBehaviour
         if (_latestBrain == null)
         {
             //FAIL SOUND
+            GetComponent<AudioSource>().Play();
         }
         else
         {

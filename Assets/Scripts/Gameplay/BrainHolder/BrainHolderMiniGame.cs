@@ -24,6 +24,10 @@ public class BrainHolderMiniGame : BrainHolder
         {
             GameManager.Instance.TurnOnMiniGame();
         }
+        else
+        {
+            GetComponent<AudioSource>().Play();
+        }
     }
 
     protected override void ManipulateBrainPosition()
