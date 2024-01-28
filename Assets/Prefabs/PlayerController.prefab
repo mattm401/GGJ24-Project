@@ -150,7 +150,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -799,7 +799,6 @@ MonoBehaviour:
   cameraCanMove: 1
   mouseSensitivity: 2
   maxLookAngle: 50
-  ControlLocked: 0
   lockCursor: 1
   crosshair: 1
   crosshairImage: {fileID: 21300000, guid: be4ce60e2c9768c44b9b10b9c5258045, type: 3}
@@ -850,9 +849,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e207f6e5746785c47abb4ee641f5bff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FirstPersonController: {fileID: 1954670467235160175}
-  ControlLocked: 0
-  FPSCamera: {fileID: 5910582309053361009}
   InteractTMP: {fileID: 5824226712216639830}
   PlayerCam: {fileID: 5910582309053361009}
   InteractDistance: 2
