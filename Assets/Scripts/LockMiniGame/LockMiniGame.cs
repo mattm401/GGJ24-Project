@@ -11,17 +11,16 @@ namespace Assets.Scripts.LockMiniGame
     {
         public GameObject LockTarget;
         public GameObject DisplayCanvas;
+        public GameObject CenterPoint;
 
         private readonly bool _debug = false;
-        
-        private readonly float _lockRotationSpeed = 0.01f;
         
         private const float FadeTime = 0.75f;
         private const float HealthOn = 1.0f;
         private const float HealthOff = 0.0f;
         private const float HealthFillRate = 0.001f;
-        private const float HealthDefillRate = 0.002f;
-        private const float MouseClampDist = 200.0f;
+        private const float HealthDefillRate = 0.00001f;
+        private const float MouseClampDist = 75.0f;
         
         private bool _displayActive;
         private bool _mouseOverSphere;
@@ -39,63 +38,44 @@ namespace Assets.Scripts.LockMiniGame
             _border = DisplayCanvas.GetComponentsInChildren<Image>()[0];
             _background = DisplayCanvas.GetComponentsInChildren<Image>()[1];
             _health = DisplayCanvas.GetComponentsInChildren<Image>()[2];
+
+            // Set Position
+            transform.position = new Vector3(0, 0, 20);
+            transform.rotation = new Quaternion(0, 180, 0, 0);
+            transform.LookAt(CenterPoint.transform);
         }
 
         // Update is called once per frame
         [UsedImplicitly]
         void Update()
         {
-            
-
             DetectLockContact();
             UpdateLockDisplayBar();
 
             // Determine how to change value of health bar
             if (_displayActive)
             {
-
-                // Get mouse position
-                float mouseX;
-                float mouseY;
-
                 // Override mouse position for screen position (for testing purposes)
                 var mousePosNew = Input.mousePosition;
                 mousePosNew.x -= _mousePosOrigin.x;
                 mousePosNew.y -= _mousePosOrigin.y;
-                mouseX = mousePosNew.x;
-                mouseY = mousePosNew.y;
-
-                if (mousePosNew.x > MouseClampDist)
-                {
-                    mouseX = MouseClampDist;
-                }
-
-                if (mousePosNew.x < -MouseClampDist)
-                {
-                    mouseX = -MouseClampDist;
-                }
-
-                if (mousePosNew.y > MouseClampDist)
-                {
-                    mouseY = MouseClampDist;
-                }
-
-                if (mousePosNew.y < -MouseClampDist)
-                {
-                    mouseY = -MouseClampDist;
-                }
-
+                
                 // Rotate object
                 LockTarget.transform.LookAt(new Vector3(-mousePosNew.x, mousePosNew.y, Camera.main.transform.position.z));
+                (float mouseX, float mouseY) = ClampMouseValues(mousePosNew);
+                (float targX, float targY) = LockTarget.GetComponentInChildren<LockObject>().GetXandY();
 
+                var y_left = targY - 20.0f;
+                var y_right = targY + 20.0f;
+                var x_left = targX - 20.0f;
+                var x_right = targX + 20.0f;
 
-                if (_debug) Debug.Log("Clamped Mouse Pos: (" + mouseX + ", " + mouseY + ")");
-                
-                if (_health.fillAmount < 1.0f && mouseY > 0 && (mouseX >= -10.0f && mouseX <= 10.0f))
+                if (_health.fillAmount < 1.0f && mouseX > x_left && mouseX < x_right && mouseY > y_left && mouseY < y_right)
                 {
                     _health.fillAmount += HealthFillRate;
+                    LockTarget.GetComponentInChildren<LockObject>().setCurrentLevel(_health.fillAmount);
                 }
-                else if (_health.fillAmount >= 1.0f && mouseY > 0 && (mouseX >= -10.0f && mouseX <= 10.0f))
+                else if (_health.fillAmount >= 1.0f && mouseX > x_left && mouseX < x_right && mouseY > y_left && mouseY < y_right)
                 {
                     // Add particle effect (audio will play on object)
                     if (!LockTarget.transform.Find("ElectricitySphere").gameObject.activeSelf)
@@ -106,13 +86,7 @@ namespace Assets.Scripts.LockMiniGame
                 else
                 {
                     _health.fillAmount -= HealthDefillRate;
-                }
-            }
-            else
-            {
-                if (_health.fillAmount > 0.0f && _health.fillAmount < 1.0f)
-                {
-                    _health.fillAmount -= HealthDefillRate;
+                    LockTarget.GetComponentInChildren<LockObject>().setCurrentLevel(_health.fillAmount);
                 }
             }
         }
@@ -171,6 +145,36 @@ namespace Assets.Scripts.LockMiniGame
             {
                 _mouseOverSphere = false;
             }
+        }
+
+        private (float, float) ClampMouseValues(Vector3 mousePosNew)
+        {
+            var mouseX = mousePosNew.x;
+            var mouseY = mousePosNew.y;
+
+            if (mousePosNew.x > MouseClampDist)
+            {
+                mouseX = MouseClampDist;
+            }
+
+            if (mousePosNew.x < -MouseClampDist)
+            {
+                mouseX = -MouseClampDist;
+            }
+
+            if (mousePosNew.y > MouseClampDist)
+            {
+                mouseY = MouseClampDist;
+            }
+
+            if (mousePosNew.y < -MouseClampDist)
+            {
+                mouseY = -MouseClampDist;
+            }
+
+            if (_debug) Debug.Log("Clamped Mouse Pos: (" + mouseX + ", " + mouseY + ")");
+
+            return (mouseX, mouseY);
         }
     }
 }
