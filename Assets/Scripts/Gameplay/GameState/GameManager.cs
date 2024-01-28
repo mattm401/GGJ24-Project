@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public bool MiniGameOn;
     public InputActionAsset Actions;
     private string _exitInputKey;
+    public TextMeshProUGUI MiniGameEscapeText;
 
     // Public property to access the singleton instance
     public static GameManager Instance
@@ -61,13 +62,15 @@ public class GameManager : MonoBehaviour
         _brainScores = new List<double>();
 
         HookupInputs();
+
+        TurnOffMiniGame();
     }
 
     private void HookupInputs()
     {
         InputAction exit = Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).FindAction(InputMap.ESCAPE_CONTROL_INPUT_KEY);
         exit.performed += ExitButtonPressed;
-        _exitInputKey = exit.actionMap.bindings[0].path;
+        _exitInputKey = exit.bindings[0].path;
     }
 
     public void ExitButtonPressed(InputAction.CallbackContext context)
@@ -86,6 +89,7 @@ public class GameManager : MonoBehaviour
         SetMiniGameEnabled(true);
         Cursor.lockState = CursorLockMode.None;
         MiniGameOn = true;
+        MiniGameEscapeText.text = $"{_exitInputKey} - EXIT MINIGAME";
     }
 
     public void TurnOffMiniGame()
