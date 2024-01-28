@@ -3,13 +3,12 @@ using UnityEngine;
 public class BrainHolder : MonoBehaviour
 {
     public Transform BrainHoldTransform;
-    private bool _manipulatingBrain;
+    protected bool _manipulatingBrain;
     protected BrainController _latestBrain;
     public float BrainLaunchForce = 100f;
     public Color coneColor = Color.yellow;
     public PlayerInteraction PlayerInteraction;
     public string InteractionText = "PLACE BRAIN";
-
 
     private void Update()
     {

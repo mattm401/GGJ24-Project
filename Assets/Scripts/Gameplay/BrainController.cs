@@ -6,27 +6,21 @@ public class BrainController : MonoBehaviour, IGrabbable
 {
     public Collider Collider;
     public Rigidbody BrainRB;
-    public float DebugBounceForce = 10f;
-    public bool DebugBounceTest = false;
 
     public float MaxHealth = 10f;
     public float Health = 1f;
     public bool BeingCarried;
     public GameObject BloodDecalReference;
+    public bool DebugRandomHealth;
 
-    // Start is called before the first frame update
-    void Start()
+    public void RegisterRating()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && DebugBounceTest)
+        if (DebugRandomHealth)
         {
-            BrainRB.AddForce(Vector3.up * DebugBounceForce);
+            Health = Random.Range(1, MaxHealth);
         }
+
+        GameManager.Instance.RegisterBrainScore(Health / MaxHealth);
     }
 
     public void SetHealth(float health)

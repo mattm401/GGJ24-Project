@@ -15,9 +15,17 @@ public class BrainHolderReturn : BrainHolder
 
             if( Vector3.Distance(_latestBrain.transform.position, BrainTerminationPoint.position) < 1f)
             {
-                Debug.Log("BRAIN RETURNED! IMPLEMENT SCORING CODE");
+                RegisterBrain();
+
                 Destroy(_latestBrain.gameObject);
+
+                _manipulatingBrain = false;
             }
         }
+    }
+
+    private void RegisterBrain()
+    {
+        _latestBrain.RegisterRating();
     }
 }
