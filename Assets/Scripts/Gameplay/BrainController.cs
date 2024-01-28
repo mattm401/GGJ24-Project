@@ -7,8 +7,8 @@ public class BrainController : MonoBehaviour, IGrabbable
     public Collider Collider;
     public Rigidbody BrainRB;
 
-    public float MaxHealth = 10f;
-    public float Health = 1f;
+    private float MaxHealth = 4f;
+    private float Health = 0f;
     public bool BeingCarried;
     public GameObject BloodDecalReference;
     public bool DebugRandomHealth;
@@ -18,11 +18,13 @@ public class BrainController : MonoBehaviour, IGrabbable
 
     public void RegisterRating()
     {
-        Health = (Node1Score + Node2Score + Node3Score + Node4Score) / 4f;
+        Health = Node1Score + Node2Score + Node3Score + Node4Score;
+
         if (Health > MaxHealth)
         {
             Health = MaxHealth; 
         }
+
         GameManager.Instance.RegisterBrainScore(Health / MaxHealth);
     }
 
