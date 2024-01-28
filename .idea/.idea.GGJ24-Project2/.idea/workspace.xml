@@ -105,7 +105,7 @@
       <option name="presentableId" value="Default" />
       <updated>1706376945916</updated>
       <workItem from="1706376947330" duration="10132000" />
-      <workItem from="1706395808040" duration="4653000" />
+      <workItem from="1706395808040" duration="5286000" />
     </task>
     <servers />
   </component>
@@ -119,13 +119,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/_David/TwitchPanel.cs</url>
-          <line>132</line>
+          <line>133</line>
           <properties documentPath="D:\SideProject\GGJ24-Project2\Assets\Scripts\_David\TwitchPanel.cs" initialLine="132" containingFunctionPresentation="Method 'FireHelpCommand'">
             <startOffsets>
-              <option value="3716" />
+              <option value="3735" />
             </startOffsets>
             <endOffsets>
-              <option value="3775" />
+              <option value="3794" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="1" />
