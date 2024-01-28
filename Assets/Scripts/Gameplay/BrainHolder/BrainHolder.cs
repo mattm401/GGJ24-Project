@@ -26,6 +26,7 @@ public class BrainHolder : MonoBehaviour
 
     protected virtual void PickUpBrain()
     {
+        _latestBrain.BrainRB.velocity = Vector3.zero;
         Debug.Log("Holder grabbing brain");
         _manipulatingBrain = true;
         _latestBrain.PickedUp();

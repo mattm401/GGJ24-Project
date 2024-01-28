@@ -14,24 +14,16 @@ public class BrainController : MonoBehaviour, IGrabbable
     public bool DebugRandomHealth;
     public AudioSource ImpactSound;
 
+    public float Node1Score, Node2Score, Node3Score, Node4Score;
+
     public void RegisterRating()
     {
-        if (DebugRandomHealth)
+        Health = (Node1Score + Node2Score + Node3Score + Node4Score) / 4f;
+        if (Health > MaxHealth)
         {
-            Health = Random.Range(1, MaxHealth);
+            Health = MaxHealth; 
         }
-
         GameManager.Instance.RegisterBrainScore(Health / MaxHealth);
-    }
-
-    public void SetHealth(float health)
-    {
-        Health = health;
-
-        if(Health > MaxHealth)
-        {
-            Health = MaxHealth;
-        }
     }
 
     public void PickedUp()
