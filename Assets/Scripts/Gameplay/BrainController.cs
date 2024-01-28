@@ -8,7 +8,7 @@ public class BrainController : MonoBehaviour, IGrabbable
     public Rigidbody BrainRB;
 
     private float MaxHealth = 4f;
-    private float Health = 4f;
+    private float Health = 0f;
     public bool BeingCarried;
     public GameObject BloodDecalReference;
     public bool DebugRandomHealth;

@@ -12490,6 +12490,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9018029731238052418, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19360,6 +19364,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -179.977
       objectReference: {fileID: 0}
+    - target: {fileID: 5574719679893739473, guid: c1470d71d73bd624a8eb11f52a0c5e70, type: 3}
+      propertyPath: MiniGameCamera
+      value: 
+      objectReference: {fileID: 1422595422}
+    - target: {fileID: 5574719679893739473, guid: c1470d71d73bd624a8eb11f52a0c5e70, type: 3}
+      propertyPath: ContainMiniGame
+      value: 
+      objectReference: {fileID: 1422595422}
     - target: {fileID: 5574719679893739473, guid: c1470d71d73bd624a8eb11f52a0c5e70, type: 3}
       propertyPath: PlayerInteraction
       value: 
