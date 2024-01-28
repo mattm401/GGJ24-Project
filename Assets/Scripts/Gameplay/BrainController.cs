@@ -47,6 +47,7 @@ public class BrainController : MonoBehaviour, IGrabbable
         BeingCarried = false;
         //Collider.enabled = true;
         BrainRB.useGravity = true;
+        BrainRB.constraints = RigidbodyConstraints.None;
         Debug.Log("Brain dropped");
     }
 
@@ -59,7 +60,7 @@ public class BrainController : MonoBehaviour, IGrabbable
 
         var bloodDecal = Instantiate(BloodDecalReference);
         bloodDecal.transform.position = contactPoint + Vector3.up;
-        ImpactSound.pitch = Random.Range(0f, 2f);
+        ImpactSound.pitch = Random.Range(1f, 2f);
         ImpactSound.Play();
         //bloodDecal.transform.LookAt(contactNormal);
     }

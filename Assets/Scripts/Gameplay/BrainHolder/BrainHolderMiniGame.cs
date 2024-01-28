@@ -23,20 +23,22 @@ public class BrainHolderMiniGame : BrainHolder
         if (_latestBrain != null)
         {
             _latestBrain.transform.position = BrainHoldTransform.position;
+            _latestBrain.transform.rotation = RotationReference.rotation;
+            _latestBrain.BrainRB.constraints = RigidbodyConstraints.FreezeAll;
             
-            Quaternion difference = Quaternion.Inverse(_latestBrain.transform.rotation) * RotationReference.rotation;
+            //Quaternion difference = Quaternion.Inverse(_latestBrain.transform.rotation) * RotationReference.rotation;
 
-            // Convert the difference to Euler angles
-            Vector3 differenceEulerAngles = difference.eulerAngles;
+            //// Convert the difference to Euler angles
+            //Vector3 differenceEulerAngles = difference.eulerAngles;
 
-            if (Vector3.Distance(differenceEulerAngles, Vector3.one) > 1)
-            {
-                _latestBrain.transform.rotation = Quaternion.RotateTowards(_latestBrain.transform.rotation, RotationReference.rotation, Time.deltaTime * RotationSpeed);
-            }
-            else
-            {
-                _latestBrain.transform.rotation = RotationReference.rotation;
-            }
+            //if (Vector3.Distance(differenceEulerAngles, Vector3.one) > 1)
+            //{
+            //    _latestBrain.transform.rotation = Quaternion.RotateTowards(_latestBrain.transform.rotation, RotationReference.rotation, Time.deltaTime * RotationSpeed);
+            //}
+            //else
+            //{
+            //    _latestBrain.transform.rotation = RotationReference.rotation;
+            //}
         }
     }
 }
