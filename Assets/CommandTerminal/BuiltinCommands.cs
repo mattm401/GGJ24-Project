@@ -1,5 +1,6 @@
 using System.Text;
 using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 
 namespace CommandTerminal
@@ -18,9 +19,15 @@ namespace CommandTerminal
         {
             string output = "";
 
-            foreach (var command in Terminal.Shell.Commands)
+            //sort the dictionary by key 
+            
+            var sortedKeys = Terminal.Shell.Commands.Keys.OrderBy(key => key);
+            
+            foreach (var key in sortedKeys)
             {
-                output += string.Format("{0}: {1}\n", command.Key.PadRight(16), command.Value.help);
+                CommandInfo value = Terminal.Shell.Commands[key];
+                
+                output += string.Format("{0}: {1}\n", key.PadRight(16), value.help);
             }
             
             return output;

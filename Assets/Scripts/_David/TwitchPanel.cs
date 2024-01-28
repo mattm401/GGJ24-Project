@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CommandTerminal;
 using NaughtyAttributes;
 using TMPro;
@@ -133,10 +134,15 @@ public class TwitchPanel : MonoBehaviour
         string message = BuiltinCommands.GetListOfCommandAndInfo();
         TwitchChatClient.instance.SendChatMessage("Chat Commands:");
         
+        var sortedKeys = Terminal.Shell.Commands.Keys.OrderBy(key => key);
+
+        
         //have to send each one because twitch message doesn't support newline.
-        foreach (var command in Terminal.Shell.Commands)
+        foreach (var key in sortedKeys)
         {
-            TwitchChatClient.instance.SendChatMessage(string.Format("{0}: {1}\n", command.Key.PadRight(16), command.Value.help));
+            CommandInfo value = Terminal.Shell.Commands[key];
+            
+            TwitchChatClient.instance.SendChatMessage(string.Format("{0}: {1}", key.PadRight(16), value.help));
         }
         
         
