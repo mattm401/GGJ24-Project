@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private string _exitInputKey;
     public TextMeshProUGUI MiniGameEscapeText;
 
+    private bool _resetNeeded;
+
     // Public property to access the singleton instance
     public static GameManager Instance
     {
@@ -81,6 +83,7 @@ public class GameManager : MonoBehaviour
         if (MiniGameOn)
         {
             TurnOffMiniGame();
+            GameManager.Instance.SetResetNeeded(true);
         }
     }
 
@@ -101,6 +104,7 @@ public class GameManager : MonoBehaviour
         SetMiniGameEnabled(false);
         Cursor.lockState = CursorLockMode.Locked;
         MiniGameOn = false;
+        GameManager.Instance.SetResetNeeded(true);
     }
 
     // Example method to start the game
@@ -119,5 +123,15 @@ public class GameManager : MonoBehaviour
         _brainScores.Add(score);
         _currOveralScore = _brainScores.Average();
         ScoreUI.text = $"EFFICIENCY RATING: {(_currOveralScore * 100f).ToString("F2") + "%"}";
+    }
+
+    public bool IsResetNeeded()
+    {
+        return _resetNeeded;
+    }
+
+    public void SetResetNeeded(bool value)
+    {
+        _resetNeeded = value;
     }
 }

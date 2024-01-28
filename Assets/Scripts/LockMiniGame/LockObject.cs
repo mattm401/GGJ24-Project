@@ -68,6 +68,7 @@ namespace Assets.Scripts.LockMiniGame
 
         public void ResetGame()
         {
+            print('!');
             _currentLevel = Random.Range(0.4f, 0.7f);
             _xRange = Random.Range(-65.0f, 65.0f);
             _yRange = Random.Range(-65.0f, 65.0f);
