@@ -18,7 +18,7 @@ namespace Assets.Scripts.LockMiniGame
         private const float HealthOn = 1.0f;
         private const float HealthOff = 0.0f;
         private const float HealthFillRate = 0.001f;
-        private const float HealthDefillRate = 0.00001f;
+        private const float HealthDefillRate = 0.0001f;
         private const float MouseClampDist = 75.0f;
         
         private bool _displayActive;
@@ -55,7 +55,7 @@ namespace Assets.Scripts.LockMiniGame
                 mousePosNew.y -= _mousePosOrigin.y;
                 
                 // Rotate object
-                LockTarget.transform.LookAt(new Vector3(mousePosNew.x, Camera.main.transform.position.y, mousePosNew.y));
+                LockTarget.transform.LookAt(new Vector3(mousePosNew.x, -Camera.main.transform.position.z, mousePosNew.y));
                 (float mouseX, float mouseY) = ClampMouseValues(mousePosNew);
                 (float targX, float targY) = LockTarget.GetComponentInChildren<LockObject>().GetXandY();
 
@@ -75,6 +75,30 @@ namespace Assets.Scripts.LockMiniGame
                     if (!LockTarget.transform.Find("ElectricitySphere").gameObject.activeSelf)
                     {
                         LockTarget.transform.Find("ElectricitySphere").gameObject.SetActive(true);
+                        var locks = GameObject.FindGameObjectsWithTag("Lock");
+                        var winCondition = true;
+                        for (var i = 0; i < locks.Length; i++) 
+                        {
+                            if (!locks[i].transform.Find("ElectricitySphere").gameObject.activeSelf)
+                            {
+                                winCondition = false;
+
+                            }
+                        }
+                        if (winCondition)
+                        {
+                            for (var i = 0; i < locks.Length; i++)
+                            {
+                                locks[i].transform.Find("ElectricitySphere").gameObject.SetActive(false);
+                                locks[i].GetComponentInChildren<LockObject>().setCurrentLevel(0.3f);
+                                locks[i].GetComponentInChildren<LockObject>().ResetGame();
+                            }
+                            _displayActive = false;
+                            StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
+                            StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
+                            StartCoroutine(FadeTo(_health, HealthOff, FadeTime));
+                            GameManager.Instance.TurnOffMiniGame();
+                        }
                     }
                 }
                 else
@@ -137,6 +161,10 @@ namespace Assets.Scripts.LockMiniGame
                     _health.fillAmount = LockTarget.GetComponent<LockObject>().getCurrentLevel();
                     _mouseOverSphere = true;
                 }
+                else
+                {
+                    _mouseOverSphere = false;
+                }
             }
             else
             {
@@ -146,8 +174,8 @@ namespace Assets.Scripts.LockMiniGame
 
         private (float, float) ClampMouseValues(Vector3 mousePosNew)
         {
-            var mouseX = mousePosNew.y;
-            var mouseY = mousePosNew.x;
+            var mouseX = mousePosNew.x;
+            var mouseY = mousePosNew.y;
 
             if (mousePosNew.x > MouseClampDist)
             {

@@ -7,6 +7,8 @@ public class LockObject : MonoBehaviour
     private float currentLevel;
     private float xRange;
     private float yRange;
+    private Vector3 origin_pos;
+    private Quaternion origin_rot;
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +16,8 @@ public class LockObject : MonoBehaviour
         currentLevel = Random.Range(0.4f, 0.7f);
         xRange = Random.Range(-65.0f, 65.0f);
         yRange = Random.Range(-65.0f, 65.0f);
+        origin_pos = transform.position;
+        origin_rot = transform.rotation;
 
     }
 
@@ -41,6 +45,15 @@ public class LockObject : MonoBehaviour
     public (float, float) GetXandY()
     {
         return (xRange, yRange);
+    }
+
+    public void ResetGame()
+    {
+        currentLevel = Random.Range(0.4f, 0.7f);
+        xRange = Random.Range(-65.0f, 65.0f);
+        yRange = Random.Range(-65.0f, 65.0f);
+        transform.position = origin_pos;
+        transform.rotation = origin_rot;
     }
 
 }
