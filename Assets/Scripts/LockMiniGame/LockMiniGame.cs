@@ -311,6 +311,15 @@ namespace Assets.Scripts.LockMiniGame
             blendShapeValues[nodeNumber] = 100f;
         }
 
+        private void ResetFace()
+        {
+            for (int i = 0; i < blendShapeValues.Length; i++)
+            {
+                blendShapeValues[i] = 0f;
+                skinnedMeshRenderer.SetBlendShapeWeight(i, blendShapeValues[i]);
+            }
+        }
+
         private void UpdateFace()
         {
             for (int i = 0; i < blendShapeValues.Length; i++)
@@ -336,6 +345,7 @@ namespace Assets.Scripts.LockMiniGame
 
         private void Reset()
         {
+            ResetFace();
             var locks = GameObject.FindGameObjectsWithTag("Lock");
             for (var i = 0; i < locks.Length; i++)
             {

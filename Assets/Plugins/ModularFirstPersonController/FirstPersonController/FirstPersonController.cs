@@ -362,6 +362,14 @@ public class FirstPersonController : MonoBehaviour
         {
             HeadBob();
         }
+
+        if (isWalking & !GetComponent<AudioSource>().isPlaying)
+        {
+            GetComponent<AudioSource>().Play();
+        } else if (!isWalking & GetComponent<AudioSource>().isPlaying)
+        {
+            GetComponent<AudioSource>().Stop();
+        }
     }
 
     void FixedUpdate()
@@ -378,10 +386,14 @@ public class FirstPersonController : MonoBehaviour
             if (targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded)
             {
                 isWalking = true;
+                print("isWalking true");
+
             }
             else
             {
                 isWalking = false;
+                print("isWalking false");
+
             }
 
             // All movement calculations shile sprint is active
