@@ -39,10 +39,10 @@ namespace Assets.Scripts.LockMiniGame
             _background = DisplayCanvas.GetComponentsInChildren<Image>()[1];
             _health = DisplayCanvas.GetComponentsInChildren<Image>()[2];
 
-            // Set Position
-            transform.position = new Vector3(0, 0, 20);
-            transform.rotation = new Quaternion(0, 180, 0, 0);
-            transform.LookAt(CenterPoint.transform);
+            //// Set Position
+            //transform.position = new Vector3(0, 0, 20);
+            //transform.rotation = new Quaternion(0, 180, 0, 0);
+            //transform.LookAt(CenterPoint.transform);
         }
 
         // Update is called once per frame
@@ -137,9 +137,12 @@ namespace Assets.Scripts.LockMiniGame
             if (Physics.Raycast(ray, out hit))
             {
                 Debug.Log("Mouse Touching: " + hit.collider.name);
-                LockTarget = hit.collider.gameObject;
-                _health.fillAmount = LockTarget.GetComponent<LockObject>().getCurrentLevel();
-                _mouseOverSphere = true;
+                if (hit.collider.name.Contains("LockPoint"))
+                {
+                    LockTarget = hit.collider.gameObject;
+                    _health.fillAmount = LockTarget.GetComponent<LockObject>().getCurrentLevel();
+                    _mouseOverSphere = true;
+                }
             }
             else
             {

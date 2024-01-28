@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BrainHolder : MonoBehaviour
 {
+    public Collider BrainHolderCollider;
     public Transform BrainHoldTransform;
     protected bool _manipulatingBrain;
     protected BrainController _latestBrain;
@@ -29,6 +30,31 @@ public class BrainHolder : MonoBehaviour
         _manipulatingBrain = true;
         _latestBrain.PickedUp();
         DisableInteractionText();
+        //BrainHolderCollider.enabled = false;
+    }
+    public virtual void ReleaseBrain()
+    {
+        if (_latestBrain == null)
+        {
+            //FAIL SOUND
+        }
+        else
+        {
+            Debug.Log("Holder releasing brain");
+            var rb = _latestBrain.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                Vector3 pos = transform.position;
+                var dir = (pos - RandomPointInCone(Vector3.forward)).normalized;
+                rb.AddForce(dir * BrainLaunchForce);
+            }
+
+            _latestBrain.Dropped();
+
+            _latestBrain = null;
+            _manipulatingBrain = false;
+            //BrainHolderCollider.enabled = true;
+        }
     }
 
     protected virtual void ManipulateBrainPosition()
@@ -75,29 +101,6 @@ public class BrainHolder : MonoBehaviour
         }
     }
 
-    public void ReleaseBrain()
-    {
-        if(_latestBrain == null)
-        {
-            //FAIL SOUND
-        }
-        else
-        {
-            Debug.Log("Holder releasing brain");
-            var rb = _latestBrain.GetComponent<Rigidbody>();
-            if(rb != null)
-            {
-                Vector3 pos = transform.position;
-                var dir = (pos - RandomPointInCone(Vector3.forward)).normalized;
-                rb.AddForce(dir * BrainLaunchForce);
-            }
-
-            _latestBrain.Dropped();
-
-            _latestBrain = null;
-            _manipulatingBrain = false;
-        }
-    }
 
     // Calculate random direction within a cone
     Vector3 RandomPointInCone(Vector3 coneDirection)
