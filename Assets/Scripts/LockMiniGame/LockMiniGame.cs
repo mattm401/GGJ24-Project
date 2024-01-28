@@ -13,7 +13,7 @@ namespace Assets.Scripts.LockMiniGame
         public GameObject DisplayCanvas;
         public GameObject CenterPoint;
 
-        private readonly bool _debug = false;
+        private readonly bool _debug = true;
         
         private const float FadeTime = 0.75f;
         private const float HealthOn = 1.0f;
@@ -137,9 +137,12 @@ namespace Assets.Scripts.LockMiniGame
             if (Physics.Raycast(ray, out hit))
             {
                 Debug.Log("Mouse Touching: " + hit.collider.name);
-                LockTarget = hit.collider.gameObject;
-                _health.fillAmount = LockTarget.GetComponent<LockObject>().getCurrentLevel();
-                _mouseOverSphere = true;
+                if (hit.collider.name.Contains("LockPoint"))
+                {
+                    LockTarget = hit.collider.gameObject;
+                    _health.fillAmount = LockTarget.GetComponent<LockObject>().getCurrentLevel();
+                    _mouseOverSphere = true;
+                }
             }
             else
             {
