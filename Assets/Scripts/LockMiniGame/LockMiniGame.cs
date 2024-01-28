@@ -11,7 +11,6 @@ namespace Assets.Scripts.LockMiniGame
     {
         public GameObject LockTarget;
         public GameObject DisplayCanvas;
-        public GameObject CenterPoint;
 
         private readonly bool _debug = true;
         
@@ -38,11 +37,6 @@ namespace Assets.Scripts.LockMiniGame
             _border = DisplayCanvas.GetComponentsInChildren<Image>()[0];
             _background = DisplayCanvas.GetComponentsInChildren<Image>()[1];
             _health = DisplayCanvas.GetComponentsInChildren<Image>()[2];
-
-            // Set Position
-            transform.position = new Vector3(0, 0, 20);
-            transform.rotation = new Quaternion(0, 180, 0, 0);
-            transform.LookAt(CenterPoint.transform);
         }
 
         // Update is called once per frame
@@ -61,7 +55,7 @@ namespace Assets.Scripts.LockMiniGame
                 mousePosNew.y -= _mousePosOrigin.y;
                 
                 // Rotate object
-                LockTarget.transform.LookAt(new Vector3(-mousePosNew.x, mousePosNew.y, Camera.main.transform.position.z));
+                LockTarget.transform.LookAt(new Vector3(mousePosNew.x, Camera.main.transform.position.y, mousePosNew.y));
                 (float mouseX, float mouseY) = ClampMouseValues(mousePosNew);
                 (float targX, float targY) = LockTarget.GetComponentInChildren<LockObject>().GetXandY();
 
@@ -152,8 +146,8 @@ namespace Assets.Scripts.LockMiniGame
 
         private (float, float) ClampMouseValues(Vector3 mousePosNew)
         {
-            var mouseX = mousePosNew.x;
-            var mouseY = mousePosNew.y;
+            var mouseX = mousePosNew.y;
+            var mouseY = mousePosNew.x;
 
             if (mousePosNew.x > MouseClampDist)
             {
