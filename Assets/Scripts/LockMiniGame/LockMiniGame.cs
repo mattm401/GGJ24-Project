@@ -54,6 +54,12 @@ namespace Assets.Scripts.LockMiniGame
         [UsedImplicitly]
         void Update()
         {
+            if (GameManager.Instance.IsResetNeeded())
+            {
+                Reset();
+                GameManager.Instance.SetResetNeeded(false);
+            }
+
             CheckForBrain();
             DetectLockContact();
             UpdateLockDisplayBar();
@@ -301,6 +307,31 @@ namespace Assets.Scripts.LockMiniGame
             for (int i = 0; i < blendShapeValues.Length; i++)
             {
                 skinnedMeshRenderer.SetBlendShapeWeight(i, blendShapeValues[i]);
+            }
+        }
+
+        private void Reset()
+        {
+            var locks = GameObject.FindGameObjectsWithTag("Lock");
+            for (var i = 0; i < locks.Length; i++)
+            {
+                locks[i].transform.Find("ElectricitySphere").gameObject.SetActive(false);
+                locks[i].GetComponentInChildren<LockObject>().SetCurrentLevel(0.3f);
+                locks[i].GetComponentInChildren<LockObject>().ResetGame();
+            }
+
+            _currBrain = null;
+            _displayActive = false;
+            StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
+            StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
+            StartCoroutine(FadeTo(_health, HealthOff, FadeTime));
+
+            if (_currBrain != null)
+            {
+                _currBrain.GetComponent<BrainController>().Node1Score = 0;
+                _currBrain.GetComponent<BrainController>().Node2Score = 0;
+                _currBrain.GetComponent<BrainController>().Node3Score = 0;
+                _currBrain.GetComponent<BrainController>().Node4Score = 0;
             }
         }
     }
