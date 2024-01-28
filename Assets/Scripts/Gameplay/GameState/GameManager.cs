@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
         _brainScores.Add(score);
         _currOveralScore = _brainScores.Average();
         ScoreUI.text = $"EFFICIENCY RATING: {(_currOveralScore * 100f).ToString("F2") + "%"}";
+        GetComponent<AudioSource>().Play();
     }
 
     public bool IsResetNeeded()

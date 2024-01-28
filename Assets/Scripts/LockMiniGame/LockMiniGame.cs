@@ -12,6 +12,7 @@ namespace Assets.Scripts.LockMiniGame
         public GameObject DisplayCanvas;
         public AudioClip laughClip;
         public AudioSource audioSource;
+        public AudioSource audioSourceOh;
         
 
         public SkinnedMeshRenderer skinnedMeshRenderer; //MeshRenderer for Face
@@ -180,6 +181,7 @@ namespace Assets.Scripts.LockMiniGame
                     LockTarget.GetComponentInChildren<LockObject>().SetCurrentLevel(_health.fillAmount);
                     if (_health.fillAmount <= 0.0f)
                     {
+                        playOuch();
                         LockTarget.GetComponentInChildren<LockObject>().setLocked(true);
                         switch (LockTarget.GetComponent<LockObject>().GetNodeNumber())
                         {
@@ -393,6 +395,21 @@ namespace Assets.Scripts.LockMiniGame
             else
             {
                 if(_andyDebug)Debug.LogError("LaughAudio AudioSource and/or laugh clip not found!");
+            }
+        }
+
+        private void playOuch()
+        {
+
+            if (audioSourceOh != null)
+            {
+                //audioSourceOh.clip = laughClip;
+                audioSourceOh.volume = 0.5f;
+                audioSourceOh.Play();
+            }
+            else
+            {
+                if (_andyDebug) Debug.LogError("LaughAudio AudioSource and/or laugh clip not found!");
             }
         }
 
