@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Threading;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.LockMiniGame
@@ -29,6 +27,8 @@ namespace Assets.Scripts.LockMiniGame
         private Image _background;
         private Image _health;
 
+        private GameObject _currBrain;
+
         // Start is called before the first frame update
         [UsedImplicitly]
         void Start()
@@ -43,6 +43,7 @@ namespace Assets.Scripts.LockMiniGame
         [UsedImplicitly]
         void Update()
         {
+            CheckForBrain();
             DetectLockContact();
             UpdateLockDisplayBar();
 
@@ -54,27 +55,45 @@ namespace Assets.Scripts.LockMiniGame
                 mousePosNew.x -= _mousePosOrigin.x;
                 mousePosNew.y -= _mousePosOrigin.y;
                 
-                // Rotate object
+                // Rotate object (in the reference frame of the top-down camera, hence why the next Vector3 has non-intuitive x,y,z usages) 
                 LockTarget.transform.LookAt(new Vector3(mousePosNew.x, -Camera.main.transform.position.z, mousePosNew.y));
                 (float mouseX, float mouseY) = ClampMouseValues(mousePosNew);
-                (float targX, float targY) = LockTarget.GetComponentInChildren<LockObject>().GetXandY();
+                (float targX, float targY) = LockTarget.GetComponentInChildren<LockObject>().GetXy();
 
-                var y_left = targY - 20.0f;
-                var y_right = targY + 20.0f;
-                var x_left = targX - 20.0f;
-                var x_right = targX + 20.0f;
+                var yLeft = targY - 20.0f;
+                var yRight = targY + 20.0f;
+                var xLeft = targX - 20.0f;
+                var xRight = targX + 20.0f;
 
-                if (_health.fillAmount < 1.0f && mouseX > x_left && mouseX < x_right && mouseY > y_left && mouseY < y_right)
+                if (_health.fillAmount < 1.0f && mouseX > xLeft && mouseX < xRight && mouseY > yLeft && mouseY < yRight)
                 {
                     _health.fillAmount += HealthFillRate;
-                    LockTarget.GetComponentInChildren<LockObject>().setCurrentLevel(_health.fillAmount);
+                    LockTarget.GetComponentInChildren<LockObject>().SetCurrentLevel(_health.fillAmount);
                 }
-                else if (_health.fillAmount >= 1.0f && mouseX > x_left && mouseX < x_right && mouseY > y_left && mouseY < y_right)
+                else if (_health.fillAmount >= 1.0f && mouseX > xLeft && mouseX < xRight && mouseY > yLeft && mouseY < yRight)
                 {
                     // Add particle effect (audio will play on object)
                     if (!LockTarget.transform.Find("ElectricitySphere").gameObject.activeSelf)
                     {
                         LockTarget.transform.Find("ElectricitySphere").gameObject.SetActive(true);
+                       
+                        // Hacky Brain Score Assignment (TODO: Clean this up).
+                        switch (LockTarget.GetComponent<LockObject>().GetNodeNumber())
+                        {
+                            case 1:
+                                _currBrain.GetComponent<BrainController>().Node1Score = 1;
+                                break;
+                            case 2:
+                                _currBrain.GetComponent<BrainController>().Node2Score = 1;
+                                break;
+                            case 3:
+                                _currBrain.GetComponent<BrainController>().Node3Score = 1;
+                                break;
+                            case 4:
+                                _currBrain.GetComponent<BrainController>().Node4Score = 1;
+                                break;
+                        }
+
                         var locks = GameObject.FindGameObjectsWithTag("Lock");
                         var winCondition = true;
                         for (var i = 0; i < locks.Length; i++) 
@@ -82,7 +101,6 @@ namespace Assets.Scripts.LockMiniGame
                             if (!locks[i].transform.Find("ElectricitySphere").gameObject.activeSelf)
                             {
                                 winCondition = false;
-
                             }
                         }
                         if (winCondition)
@@ -90,9 +108,11 @@ namespace Assets.Scripts.LockMiniGame
                             for (var i = 0; i < locks.Length; i++)
                             {
                                 locks[i].transform.Find("ElectricitySphere").gameObject.SetActive(false);
-                                locks[i].GetComponentInChildren<LockObject>().setCurrentLevel(0.3f);
+                                locks[i].GetComponentInChildren<LockObject>().SetCurrentLevel(0.3f);
                                 locks[i].GetComponentInChildren<LockObject>().ResetGame();
                             }
+
+                            _currBrain = null;
                             _displayActive = false;
                             StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
                             StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
@@ -104,7 +124,7 @@ namespace Assets.Scripts.LockMiniGame
                 else
                 {
                     _health.fillAmount -= HealthDefillRate;
-                    LockTarget.GetComponentInChildren<LockObject>().setCurrentLevel(_health.fillAmount);
+                    LockTarget.GetComponentInChildren<LockObject>().SetCurrentLevel(_health.fillAmount);
                 }
             }
         }
@@ -147,9 +167,9 @@ namespace Assets.Scripts.LockMiniGame
 
         private void DetectLockContact()
         {
-            // Raycasting to determine if mouse is over object
-            var ray = new Ray();
-            var hit = new RaycastHit();
+            // Ray casting to determine if mouse is over object
+            Ray ray;
+            RaycastHit hit;
 
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
@@ -158,7 +178,7 @@ namespace Assets.Scripts.LockMiniGame
                 if (hit.collider.name.Contains("LockPoint"))
                 {
                     LockTarget = hit.collider.gameObject;
-                    _health.fillAmount = LockTarget.GetComponent<LockObject>().getCurrentLevel();
+                    _health.fillAmount = LockTarget.GetComponent<LockObject>().GetCurrentLevel();
                     _mouseOverSphere = true;
                 }
                 else
@@ -201,7 +221,28 @@ namespace Assets.Scripts.LockMiniGame
 
             return (mouseX, mouseY);
         }
+
+        private void CheckForBrain()
+        {
+            if (_currBrain == null)
+            {
+                Debug.Log("Awake-Mini-Game");
+                GameObject[] availableBrains = GameObject.FindGameObjectsWithTag("Interactable");
+                for (int i = 0; i < availableBrains.Length; i++)
+                {
+                    if (availableBrains[i].GetComponent<BrainController>() != null)
+                    {
+                        if (availableBrains[i].GetComponent<BrainController>().BeingCarried)
+                        {
+                            _currBrain = availableBrains[i];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
+
 }
 
 /* References

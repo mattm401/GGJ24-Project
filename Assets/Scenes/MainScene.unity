@@ -4655,7 +4655,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 555461112963099549, guid: 48c9ad4a53703e143b44e552fac84e0f, type: 3}
       propertyPath: m_Name
-      value: LockPoint
+      value: LockPoint (4)
       objectReference: {fileID: 0}
     - target: {fileID: 3532247601362943488, guid: 48c9ad4a53703e143b44e552fac84e0f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18974,10 +18974,10 @@ Transform:
   - {fileID: 1261732694}
   - {fileID: 1422595424}
   - {fileID: 61933437}
+  - {fileID: 502785866}
   - {fileID: 1551845348}
   - {fileID: 1351797081}
   - {fileID: 32198635}
-  - {fileID: 502785866}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1001 &2131917937
