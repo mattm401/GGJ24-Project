@@ -386,13 +386,13 @@ public class FirstPersonController : MonoBehaviour
             if (targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded)
             {
                 isWalking = true;
-                print("isWalking true");
+                //print("isWalking true");
 
             }
             else
             {
                 isWalking = false;
-                print("isWalking false");
+                //print("isWalking false");
 
             }
 

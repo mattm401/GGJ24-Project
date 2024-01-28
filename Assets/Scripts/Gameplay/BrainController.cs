@@ -18,6 +18,14 @@ public class BrainController : MonoBehaviour, IGrabbable
     public float Node1Score, Node2Score, Node3Score, Node4Score;
     public bool Node1Works, Node2Works, Node3Works, Node4Works = true;
 
+    void Start()
+    {
+        Node1Score = Random.Range(0.4f, 0.7f);
+        Node2Score = Random.Range(0.4f, 0.7f);
+        Node3Score = Random.Range(0.4f, 0.7f);
+        Node4Score = Random.Range(0.4f, 0.7f);
+    }
+
     public void RegisterRating()
     {
         Health = Node1Score + Node2Score + Node3Score + Node4Score;

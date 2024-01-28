@@ -124,12 +124,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collider: {fileID: 5005819873102214261}
   BrainRB: {fileID: 3056091497082217375}
-  MaxHealth: 10
-  Health: 1
+  _debug: 0
   BeingCarried: 0
   BloodDecalReference: {fileID: 4251869334307872706, guid: 9b93d4b93bcd27d4aad8dc4feb613431, type: 3}
   DebugRandomHealth: 1
   ImpactSound: {fileID: 7119004576788952170}
+  Node1Score: 0
+  Node2Score: 0
+  Node3Score: 0
+  Node4Score: 0
+  Node1Works: 1
+  Node2Works: 1
+  Node3Works: 1
+  Node4Works: 1
 --- !u!54 &3056091497082217375
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.LockMiniGame;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
