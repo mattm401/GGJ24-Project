@@ -18,6 +18,14 @@ public class BrainHolderMiniGame : BrainHolder
         base.ReleaseBrain();
     }
 
+    public void ReLaunchMiniGame()
+    {
+        if (_latestBrain != null)
+        {
+            GameManager.Instance.TurnOnMiniGame();
+        }
+    }
+
     protected override void ManipulateBrainPosition()
     {
         if (_latestBrain != null)
