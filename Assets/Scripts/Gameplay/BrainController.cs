@@ -12,6 +12,7 @@ public class BrainController : MonoBehaviour, IGrabbable
     public bool BeingCarried;
     public GameObject BloodDecalReference;
     public bool DebugRandomHealth;
+    public AudioSource ImpactSound;
 
     public void RegisterRating()
     {
@@ -58,6 +59,8 @@ public class BrainController : MonoBehaviour, IGrabbable
 
         var bloodDecal = Instantiate(BloodDecalReference);
         bloodDecal.transform.position = contactPoint + Vector3.up;
+        ImpactSound.pitch = Random.Range(0f, 2f);
+        ImpactSound.Play();
         //bloodDecal.transform.LookAt(contactNormal);
     }
 }
