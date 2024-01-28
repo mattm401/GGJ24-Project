@@ -17,6 +17,8 @@ public class PlayerInteraction : MonoBehaviour
 
     public Transform GrabParent;
 
+    public bool _debug = false;
+
     private GameObject _interactableObject;
     public float GrabFollowSpeed = 10f;
 
@@ -64,7 +66,7 @@ public class PlayerInteraction : MonoBehaviour
             if (hit.collider.CompareTag("Interactable"))
             {
                 // Draw a debug line in the scene, color it red
-                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
+                if(_debug)Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
                 _interactableObject = hit.transform.gameObject;
                 string interactDescription = hit.transform.name;
                 SetCanInteract(true, interactDescription);
@@ -78,7 +80,7 @@ public class PlayerInteraction : MonoBehaviour
         else
         {
             // If the ray doesn't hit anything, draw the debug line, color it green
-            Debug.DrawRay(ray.origin, ray.direction * InteractDistance, Color.green);
+            if(_debug)Debug.DrawRay(ray.origin, ray.direction * InteractDistance, Color.green);
             SetCanInteract(false);
         }
     }
@@ -92,7 +94,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public void InteractButtonPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("Interact button pressed");
+        if(_debug)Debug.Log("Interact button pressed");
         if (_isGrabbing)
         {
             Drop();
@@ -117,7 +119,7 @@ public class PlayerInteraction : MonoBehaviour
                 var interactableScript = script as IInteractable;
                 interactableScript.Interact();
 
-                Debug.Log("You just interacted something!");
+                if(_debug)Debug.Log("You just interacted something!");
             }
 
             //TODO I don't like this workflow necessarily... grabbable objects should either be in charge of how they are grabbed, or "interactable" should be a class derived from monobehavior, i.e. the grabbing happens as part of "Interact()".
@@ -142,7 +144,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Grab(IGrabbable grabbable)
     {
-        Debug.Log("You just Grabbed something!");
+        if(_debug)Debug.Log("You just Grabbed something!");
         _isGrabbing = true;
         _interactableObject.transform.SetParent(GrabParent);
         _interactableObject.transform.position = GrabParent.position;
@@ -168,7 +170,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public void Drop()
     {
-        Debug.Log("You just Dropped something!");
+        if(_debug)Debug.Log("You just Dropped something!");
         _isGrabbing = false;
 
         _interactableObject.transform.SetParent(null); //sets back to root scene

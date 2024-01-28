@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI ScoreUI;
 
+    public bool _debug = false;
+
     private List<double> _brainScores;
     private double _currOveralScore;
 
@@ -75,7 +77,7 @@ public class GameManager : MonoBehaviour
 
     public void ExitButtonPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("Escape button pressed");
+        if(_debug)Debug.Log("Escape button pressed");
         if (MiniGameOn)
         {
             TurnOffMiniGame();
@@ -84,7 +86,7 @@ public class GameManager : MonoBehaviour
 
     public void TurnOnMiniGame()
     {
-        Debug.Log("Mini game ON");
+        if(_debug)Debug.Log("Mini game ON");
         SetPlayerEnabled(false);
         SetMiniGameEnabled(true);
         Cursor.lockState = CursorLockMode.None;
@@ -94,7 +96,7 @@ public class GameManager : MonoBehaviour
 
     public void TurnOffMiniGame()
     {
-        Debug.Log("Mini game OFF");
+        if(_debug)Debug.Log("Mini game OFF");
         SetPlayerEnabled(true);
         SetMiniGameEnabled(false);
         Cursor.lockState = CursorLockMode.Locked;

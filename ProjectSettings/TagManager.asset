@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactable
   - Lock
+  - Face
   layers:
   - Default
   - TransparentFX

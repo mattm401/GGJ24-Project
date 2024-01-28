@@ -12482,6 +12482,46 @@ PrefabInstance:
       propertyPath: DisplayCanvas
       value: 
       objectReference: {fileID: 1816701845}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: skinnedMeshRenderer
+      value: 
+      objectReference: {fileID: 1941444113}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: blendShapeNames.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: blendShapeNames.Array.data[0]
+      value: blendShape2.LipCornerPull
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: blendShapeNames.Array.data[1]
+      value: blendShape2.UpperLidRaiser
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: blendShapeNames.Array.data[2]
+      value: blendShape2.MouthStretch
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: blendShapeNames.Array.data[3]
+      value: blendShape2.LipCornerDepressor
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: blendShapeNames.Array.data[4]
+      value: blendShape2.InnerBrownRaiser
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: blendShapeNames.Array.data[5]
+      value: blendShape2.EyesClosed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: blendShapeNames.Array.data[6]
+      value: blendShape2.BrowRaise
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: blendShapeNames.Array.data[7]
+      value: blendShape2.BrowLowerer
+      objectReference: {fileID: 0}
     - target: {fileID: 9018029731238052418, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
       propertyPath: m_Name
       value: Mini Game Camera
@@ -17112,7 +17152,7 @@ GameObject:
   - component: {fileID: 1941444112}
   m_Layer: 0
   m_Name: uploads_files_4147725_head_model
-  m_TagString: Untagged
+  m_TagString: Face
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18178,6 +18218,7 @@ MonoBehaviour:
   PlayerController: {fileID: 180206641}
   MiniGame: {fileID: 2114989706}
   ScoreUI: {fileID: 951252983}
+  _debug: 0
   MiniGameOn: 0
   Actions: {fileID: -944628639613478452, guid: 648ba62f5f36a04448342f0eec8ef59e, type: 3}
   MiniGameEscapeText: {fileID: 1435578600}
@@ -19277,7 +19318,7 @@ PrefabInstance:
       objectReference: {fileID: 445465776477152991}
     - target: {fileID: 7535873185697034077, guid: f20b495afa980394c86bbb753d7ace3d, type: 3}
       propertyPath: DebugTestDisablePlayerWhenHoldingBrain
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

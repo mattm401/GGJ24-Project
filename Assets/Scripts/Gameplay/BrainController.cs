@@ -6,6 +6,7 @@ public class BrainController : MonoBehaviour, IGrabbable
 {
     public Collider Collider;
     public Rigidbody BrainRB;
+    public bool _debug = false;
 
     private float MaxHealth = 4f;
     private float Health = 4f;
@@ -33,7 +34,7 @@ public class BrainController : MonoBehaviour, IGrabbable
         BeingCarried = true;
         //Collider.enabled = false;
         BrainRB.useGravity = false;
-        Debug.Log("Brain picked up");
+        if(_debug)Debug.Log("Brain picked up");
     }
 
     public void Dropped()
@@ -42,7 +43,7 @@ public class BrainController : MonoBehaviour, IGrabbable
         //Collider.enabled = true;
         BrainRB.useGravity = true;
         BrainRB.constraints = RigidbodyConstraints.None;
-        Debug.Log("Brain dropped");
+        if(_debug)Debug.Log("Brain dropped");
     }
 
     private void OnCollisionEnter(Collision collision)

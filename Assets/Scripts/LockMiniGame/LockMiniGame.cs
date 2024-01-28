@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -10,7 +11,14 @@ namespace Assets.Scripts.LockMiniGame
         public GameObject LockTarget;
         public GameObject DisplayCanvas;
 
-        private readonly bool _debug = true;
+        public SkinnedMeshRenderer skinnedMeshRenderer; //MeshRenderer for Face
+        public string[] blendShapeNames; // Names of face blendshapes
+        [Range(-100, 100)]
+        public float[] blendShapeValues;
+
+        public bool _debug = false;
+        public bool _andyDebug = true;
+
         
         private const float FadeTime = 0.75f;
         private const float HealthOn = 1.0f;
@@ -18,6 +26,7 @@ namespace Assets.Scripts.LockMiniGame
         private const float HealthFillRate = 0.001f;
         private const float HealthDefillRate = 0.0001f;
         private const float MouseClampDist = 75.0f;
+        private const int faceDistAmount = 5;
         
         private bool _displayActive;
         private bool _mouseOverSphere;
@@ -37,6 +46,8 @@ namespace Assets.Scripts.LockMiniGame
             _border = DisplayCanvas.GetComponentsInChildren<Image>()[0];
             _background = DisplayCanvas.GetComponentsInChildren<Image>()[1];
             _health = DisplayCanvas.GetComponentsInChildren<Image>()[2];
+
+            InitializeFace();
         }
 
         // Update is called once per frame
@@ -81,19 +92,24 @@ namespace Assets.Scripts.LockMiniGame
                         switch (LockTarget.GetComponent<LockObject>().GetNodeNumber())
                         {
                             case 1:
+                                SetFaceDistortion(1);
                                 _currBrain.GetComponent<BrainController>().Node1Score = 1;
                                 break;
                             case 2:
+                                SetFaceDistortion(2);
                                 _currBrain.GetComponent<BrainController>().Node2Score = 1;
                                 break;
                             case 3:
+                                SetFaceDistortion(3);
                                 _currBrain.GetComponent<BrainController>().Node3Score = 1;
                                 break;
                             case 4:
+                                SetFaceDistortion(4);
                                 _currBrain.GetComponent<BrainController>().Node4Score = 1;
                                 break;
                         }
 
+                        
                         var locks = GameObject.FindGameObjectsWithTag("Lock");
                         var winCondition = true;
                         for (var i = 0; i < locks.Length; i++) 
@@ -127,6 +143,7 @@ namespace Assets.Scripts.LockMiniGame
                     LockTarget.GetComponentInChildren<LockObject>().SetCurrentLevel(_health.fillAmount);
                 }
             }
+            UpdateFace();
         }
         IEnumerator FadeTo(Image layer, float aValue, float aTime)
         {
@@ -174,7 +191,7 @@ namespace Assets.Scripts.LockMiniGame
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log("Mouse Touching: " + hit.collider.name);
+                if(_debug) Debug.Log("Mouse Touching: " + hit.collider.name);
                 if (hit.collider.name.Contains("LockPoint"))
                 {
                     LockTarget = hit.collider.gameObject;
@@ -226,7 +243,7 @@ namespace Assets.Scripts.LockMiniGame
         {
             if (_currBrain == null)
             {
-                Debug.Log("Awake-Mini-Game");
+                if(_debug)Debug.Log("Awake-Mini-Game");
                 GameObject[] availableBrains = GameObject.FindGameObjectsWithTag("Interactable");
                 for (int i = 0; i < availableBrains.Length; i++)
                 {
@@ -239,6 +256,51 @@ namespace Assets.Scripts.LockMiniGame
                         }
                     }
                 }
+            }
+        }
+
+        private void InitializeFace()
+        {
+            GameObject faceObject = GameObject.FindGameObjectWithTag("Face");
+            if (faceObject != null)
+            {
+                skinnedMeshRenderer = faceObject.GetComponent<SkinnedMeshRenderer>();
+            }
+
+            if (skinnedMeshRenderer == null)
+            {
+                if(_andyDebug) Debug.LogError("Skinned Mesh Renderer not found!");
+                return;
+            }
+
+            // Initialize blendShapeValues array
+            int blendShapeCount = skinnedMeshRenderer.sharedMesh.blendShapeCount;
+            blendShapeValues = new float[blendShapeCount];
+
+            PopulateBlendShapeNames();
+        }
+
+        private void PopulateBlendShapeNames()
+        {
+            int blendShapeCount = skinnedMeshRenderer.sharedMesh.blendShapeCount;
+            blendShapeNames = new string[blendShapeCount];
+
+            for (int i = 0; i < blendShapeCount; i++)
+            {
+                blendShapeNames[i] = skinnedMeshRenderer.sharedMesh.GetBlendShapeName(i);
+            }
+        }
+
+        private void SetFaceDistortion(int nodeNumber)
+        {
+            blendShapeValues[nodeNumber] = 100f;
+        }
+
+        private void UpdateFace()
+        {
+            for (int i = 0; i < blendShapeValues.Length; i++)
+            {
+                skinnedMeshRenderer.SetBlendShapeWeight(i, blendShapeValues[i]);
             }
         }
     }
