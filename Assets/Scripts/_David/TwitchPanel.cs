@@ -58,7 +58,11 @@ public class TwitchPanel : MonoBehaviour
     
     private bool _sendHelpCommand = false;
     private Dictionary<string, int> _dictionaryCommandCount = new Dictionary<string, int>();
-  
+
+    private CursorLockMode _prevCursorLockMode = CursorLockMode.None;
+    private FirstPersonController _firstPersonController = null;
+    private bool _prevFirstPersonControllerEnabled;
+        
     #endregion
 
     #region callback
@@ -66,6 +70,40 @@ public class TwitchPanel : MonoBehaviour
     public void OnButtonClickToggle()
     {
         gameObjectMainPanel.SetActive(!gameObjectMainPanel.activeSelf);
+
+        if (gameObjectMainPanel.activeSelf)
+        {
+            //turn on.
+            _prevCursorLockMode = Cursor.lockState;
+            
+            //is on.
+            Cursor.lockState = CursorLockMode.None;
+
+            if (_firstPersonController == null)
+            {
+                _firstPersonController = FindFirstObjectByType<FirstPersonController>();
+            }
+
+            if (_firstPersonController != null)
+            {
+                _prevFirstPersonControllerEnabled = _firstPersonController.enabled;
+                _firstPersonController.enabled = false;
+            }
+
+            
+            
+        }
+        else
+        {
+            //turn off.
+            Cursor.lockState = _prevCursorLockMode;
+            
+            if (_firstPersonController != null)
+            {
+                _firstPersonController.enabled = _prevFirstPersonControllerEnabled;
+            }
+        }
+        
     }
     
     public void OnButtonClickConnect()
@@ -206,6 +244,16 @@ public class TwitchPanel : MonoBehaviour
             OnButtonClickConnect();
         }
     }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.LeftAlt))
+        {
+            OnButtonClickToggle();
+        }
+    }
+
 
     private void OnEnable()
     {
