@@ -12,8 +12,11 @@ namespace Assets.Scripts.LockMiniGame
         public GameObject DisplayCanvas;
         public AudioClip laughClip;
         public AudioSource audioSource;
+
         public AudioSource audioSourceOh;
         
+
+        public BrainStatus BrainStatus;
 
         public SkinnedMeshRenderer skinnedMeshRenderer; //MeshRenderer for Face
         public string[] blendShapeNames; // Names of face blendshapes
@@ -166,6 +169,7 @@ namespace Assets.Scripts.LockMiniGame
                                 }
 
                                 _displayActive = false;
+                                BrainStatus.EndDroppingIntegrity();
                                 StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
                                 StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
                                 StartCoroutine(FadeTo(_health, HealthOff, FadeTime));
@@ -226,6 +230,7 @@ namespace Assets.Scripts.LockMiniGame
             {
                 if (_debug) Debug.Log("Mouse Down");
 
+
                 if (!LockTarget.GetComponent<LockObject>().getLocked())
                 {
 
@@ -234,11 +239,13 @@ namespace Assets.Scripts.LockMiniGame
                     StartCoroutine(FadeTo(_background, HealthOn, FadeTime));
                     StartCoroutine(FadeTo(_health, HealthOn, FadeTime));
                     _mousePosOrigin = Input.mousePosition;
+                    BrainStatus.BeginDroppingIntegrity();
                 }
                 else
                 {
                     LockTarget.GetComponent<AudioSource>().Play();
                 }
+
             }
 
             if (Input.GetMouseButtonUp(0) && _health.color.a != 0.0f)
@@ -249,6 +256,8 @@ namespace Assets.Scripts.LockMiniGame
                 StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
                 StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
                 StartCoroutine(FadeTo(_health, HealthOff, FadeTime));
+
+                BrainStatus.EndDroppingIntegrity();
             }
         }
 
@@ -426,6 +435,7 @@ namespace Assets.Scripts.LockMiniGame
 
             _currBrain = null;
             _displayActive = false;
+            BrainStatus.EndDroppingIntegrity();
             StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
             StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
             StartCoroutine(FadeTo(_health, HealthOff, FadeTime));

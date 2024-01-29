@@ -23,7 +23,6 @@ public class BrainStatusUI : MonoBehaviour
     public Color Healthy;
     public Color Weak;
     public Color Dying;
-    public Material EKGMaterial;
 
     public AudioSource EKGSound;
     public AudioClip HealthyAudio;
@@ -133,7 +132,6 @@ public class BrainStatusUI : MonoBehaviour
     {
         StatusChangeAnimator.SetInteger("status", _currentImageLevel);
         OverallStatus.color = _currentColor;
-        EKGMaterial.color = _currentColor;
     }
 
     public void UpdateAudio()
@@ -178,5 +176,11 @@ public class BrainStatusUI : MonoBehaviour
             EKGSound.Play();
         }
         Dead = true;
+    }
+
+    public void SwitchMonitor(bool monitorOn)
+    {
+        PlayAudio = monitorOn;
+        StatusChangeAnimator.SetBool("monitor", monitorOn);
     }
 }
