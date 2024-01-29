@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class TutorialMessage : MonoBehaviour
+using System;
+[Serializable]
+public class TutorialMessage
 {
-    public string Message;
+    public string Tag;
+    public List<string> Messages;
     public Sprite Image;
-
+    
 
 
 }
