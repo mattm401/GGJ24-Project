@@ -14261,6 +14261,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1941444113}
     - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: TutorialMessageDisplay
+      value: 
+      objectReference: {fileID: 240789275}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
       propertyPath: blendShapeNames.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -14295,6 +14299,110 @@ PrefabInstance:
     - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
       propertyPath: blendShapeNames.Array.data[7]
       value: blendShape2.BrowLowerer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[3].Tag
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[0].Image
+      value: 
+      objectReference: {fileID: 21300000, guid: 1bddd0b49f8479c4fba315796e36d8cf, type: 3}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[1].Image
+      value: 
+      objectReference: {fileID: 21300000, guid: 3303d81ad998460489111e7103113187, type: 3}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[2].Image
+      value: 
+      objectReference: {fileID: 21300000, guid: 39a3390d99d7a9c4d85b636d2f77e359, type: 3}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[3].Image
+      value: 
+      objectReference: {fileID: 21300000, guid: 1bddd0b49f8479c4fba315796e36d8cf, type: 3}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[0].Messages.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[1].Messages.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[2].Messages.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[3].Messages.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[0].Messages.Array.data[0]
+      value: Great Job! Now lets makes that brain smile!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[0].Messages.Array.data[1]
+      value: Begin by clicking any of the four nodes and wiggling them until you've
+        lined them up right and sparks ignite!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[0].Messages.Array.data[2]
+      value: While you're clicking on a node, a meter will display showing you how
+        close you are to the correct position.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[1].Messages.Array.data[0]
+      value: However, while activating and moving a node, you'll also slowly be damaging
+        the brain until properly aligned.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[1].Messages.Array.data[1]
+      value: Should an individual nodes meter drain, it will lock out and prevent
+        further use.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[1].Messages.Array.data[2]
+      value: The overall condition of your brain is viewable in the monitor.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[1].Messages.Array.data[3]
+      value: Every successful node increases the joy level of your brain.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[2].Messages.Array.data[0]
+      value: Warning! Excessive damage will result in brain death.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[2].Messages.Array.data[1]
+      value: In the event your brain dies, eject it from The Receptacle and try with
+        a new one.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[2].Messages.Array.data[2]
+      value: Should a brain death occur, BrainCo assumes no liability or ownership
+        over the leftovers.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[2].Messages.Array.data[3]
+      value: Every successful node increases the joy level of your brain.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[3].Messages.Array.data[0]
+      value: Once all four nodes are either properly aligned or locked out, eject
+        your brain and deposit in the chute.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[3].Messages.Array.data[1]
+      value: Grab a new brain and keep going!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: MiniGameTutorialMessages.Array.data[3].Messages.Array.data[2]
+      value: Should a brain death occur, BrainCo assumes no liability or ownership
+        over the leftovers.
       objectReference: {fileID: 0}
     - target: {fileID: 9018029731238052418, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
       propertyPath: m_Name
@@ -21636,6 +21744,63 @@ PrefabInstance:
       propertyPath: m_Name
       value: BRAIN-PIPE
       objectReference: {fileID: 0}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: MessageUI
+      value: 
+      objectReference: {fileID: 240789275}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Tag
+      value: BrainGot
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Image
+      value: 
+      objectReference: {fileID: 21300000, guid: fa193befadc093247a1078402f45fd90, type: 3}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Array.data[0].Tag
+      value: BrainGot
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Array.data[1].Tag
+      value: MiniGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Array.data[0].Image
+      value: 
+      objectReference: {fileID: 21300000, guid: fa193befadc093247a1078402f45fd90, type: 3}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Array.data[1].Image
+      value: 
+      objectReference: {fileID: 21300000, guid: dc327da31127a18428feafc2231ded1d, type: 3}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Messages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Messages.Array.data[0]
+      value: Great Job! Looks like someone's came here with brains to spare!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Array.data[0].Messages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Array.data[1].Messages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Array.data[0].Messages.Array.data[0]
+      value: Great Job! Looks like someone's came here with brains to spare!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450612824606016209, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
+      propertyPath: FirstBrainPick.Array.data[1].Messages.Array.data[0]
+      value: Now its time to proceed to our signature insertion procedure. Please
+        insert the brain into The Receptacle.
+      objectReference: {fileID: 0}
     - target: {fileID: 7537455977159529382, guid: abb4a073cf98f4149a29bd85bc466ab8, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.24175093
@@ -21865,6 +22030,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BrainObjectReference: {fileID: 8766924885123941339, guid: fb94745e4d170a246afaed22f8485428, type: 3}
   BrainSpawnLocation: {fileID: 5336431034170090095}
+  MessageUI: {fileID: 0}
+  FirstBrainPick: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
