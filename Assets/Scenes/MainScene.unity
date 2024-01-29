@@ -7706,6 +7706,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1607981082521166431, guid: eafda1e2012f16544b8aee1679d648eb, type: 3}
+      propertyPath: SmilingBrain
+      value: 
+      objectReference: {fileID: 21300000, guid: 1bddd0b49f8479c4fba315796e36d8cf, type: 3}
     - target: {fileID: 2801646885760783520, guid: eafda1e2012f16544b8aee1679d648eb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -14248,6 +14252,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1406925956}
+    - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
+      propertyPath: BrainStatusUI
+      value: 
+      objectReference: {fileID: 721252869}
     - target: {fileID: 8354237079310396582, guid: beb708a5cabd51748898251ab4e7a9c3, type: 3}
       propertyPath: DisplayCanvas
       value: 

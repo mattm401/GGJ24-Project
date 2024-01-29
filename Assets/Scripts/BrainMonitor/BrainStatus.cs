@@ -47,9 +47,9 @@ public class BrainStatus : MonoBehaviour
     {
 
         float joyFactor = (_node1Level + _node2Level + _node3Level + _node4Level) / 4;
-        float terrorFactor =1-((_nodeIntegrity+_node1Level+_node2Level)/3);
-        float angerfactor = 1 -(( _nodeIntegrity+_node4Level + _node2Level) / 3);
-        float confusionFactor = 1 - ((_nodeIntegrity+_node4Level + _node1Level + _node3Level) /4);
+        float terrorFactor =1-((_nodeIntegrity+_node1Level+_node2Level)/4);
+        float angerfactor = 1 -(( _nodeIntegrity+_node4Level + _node2Level) / 4);
+        float confusionFactor = 1 - ((_nodeIntegrity+_node4Level + _node1Level + _node3Level) /5);
 
         _joyLevel = joyFactor;// / totalPoints;
         _terrorLevel = terrorFactor;/// totalPoints;
@@ -192,4 +192,11 @@ public class BrainStatus : MonoBehaviour
             SetBrain();
         }
     }
+
+    public bool IsSmiling()
+    {
+        return _node1Level == 1 && _node2Level == 1 && _node3Level == 1 && _node4Level == 1;
+    }
+
+
 }

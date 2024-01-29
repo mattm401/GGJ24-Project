@@ -17,6 +17,7 @@ namespace Assets.Scripts.LockMiniGame
         
 
         public BrainStatus BrainStatus;
+        public BrainStatusUI BrainStatusUI;
         public TutorialMessageDisplay TutorialMessageDisplay;
         public List<TutorialMessage> MiniGameTutorialMessages;
         public SkinnedMeshRenderer skinnedMeshRenderer; //MeshRenderer for Face
@@ -68,6 +69,9 @@ namespace Assets.Scripts.LockMiniGame
                 GameManager.Instance.SetResetNeeded(false);
                 CheckForBrain();
                 UpdateBrainStates();
+                BrainStatus.SetBrain();
+                BrainStatusUI.Reset();
+                
             }
             if(!_tutorialDisplayed)
             {
@@ -78,7 +82,7 @@ namespace Assets.Scripts.LockMiniGame
             CheckForBrain();
             DetectLockContact();
             UpdateLockDisplayBar();
-
+            
             // Determine how to change value of health bar
             if (LockTarget != null && _displayActive && !LockTarget.GetComponent<LockObject>().getLocked())
             {
@@ -445,7 +449,7 @@ namespace Assets.Scripts.LockMiniGame
             StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
             StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
             StartCoroutine(FadeTo(_health, HealthOff, FadeTime));
-            BrainStatus.SetBrain();
+            
         }
 
         public void UpdateBrainStates()

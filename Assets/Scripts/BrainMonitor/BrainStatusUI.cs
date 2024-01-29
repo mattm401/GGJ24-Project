@@ -19,7 +19,7 @@ public class BrainStatusUI : MonoBehaviour
     public Sprite HealthyBrain;
     public Sprite WeakBrain;
     public Sprite DyingBrain;
-
+    public Sprite SmilingBrain;
     public Color Healthy;
     public Color Weak;
     public Color Dying;
@@ -33,6 +33,7 @@ public class BrainStatusUI : MonoBehaviour
     public bool PlayAudio;
     private bool _audioPlaying;
     public bool Dead;
+    public bool Smiling;
 
     public EKGController EKGController;
 
@@ -50,13 +51,18 @@ public class BrainStatusUI : MonoBehaviour
     public void Update()
     {
         bool shouldbedead = BrainStatus.GetOverallStability() == 0;
-        
+        bool shouldbesmiling = BrainStatus.IsSmiling();
         if(shouldbedead && !Dead)
         {
             SetToDead();
         }
 
-        if (!Dead)
+        if(shouldbesmiling && !Smiling)
+        {
+            SetToSmile();
+        }
+
+        if (!Dead && !Smiling)
         {
             if(EKGController.Magnitude == 0)
             {
@@ -178,9 +184,26 @@ public class BrainStatusUI : MonoBehaviour
         Dead = true;
     }
 
+    public void SetToSmile()
+    {
+        BrainStatusImage.sprite = SmilingBrain;
+        OverallStatus.text = "SMILES";
+        PlayAudio = false;
+        EKGSound.Stop();
+        Smiling = true;
+    }
+
     public void SwitchMonitor(bool monitorOn)
     {
         PlayAudio = monitorOn;
         StatusChangeAnimator.SetBool("monitor", monitorOn);
+
+        Smiling = Dead = false;
+
+    }
+
+    public void Reset()
+    {
+        Smiling = Dead = false;
     }
 }
