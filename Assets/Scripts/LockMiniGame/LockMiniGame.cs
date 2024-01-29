@@ -12,6 +12,10 @@ namespace Assets.Scripts.LockMiniGame
         public GameObject DisplayCanvas;
         public AudioClip laughClip;
         public AudioSource audioSource;
+
+        public AudioSource audioSourceOh;
+        
+
         public BrainStatus BrainStatus;
 
         public SkinnedMeshRenderer skinnedMeshRenderer; //MeshRenderer for Face
@@ -61,6 +65,8 @@ namespace Assets.Scripts.LockMiniGame
             {
                 Reset();
                 GameManager.Instance.SetResetNeeded(false);
+                CheckForBrain();
+                UpdateBrainStates();
             }
 
             CheckForBrain();
@@ -68,7 +74,7 @@ namespace Assets.Scripts.LockMiniGame
             UpdateLockDisplayBar();
 
             // Determine how to change value of health bar
-            if (_displayActive && !LockTarget.GetComponent<LockObject>().getLocked())
+            if (LockTarget != null && _displayActive && !LockTarget.GetComponent<LockObject>().getLocked())
             {
                 // Override mouse position for screen position (for testing purposes)
                 var mousePosNew = Input.mousePosition;
@@ -111,7 +117,9 @@ namespace Assets.Scripts.LockMiniGame
                     if (!LockTarget.transform.Find("ElectricitySphere").gameObject.activeSelf)
                     {
                         LockTarget.transform.Find("ElectricitySphere").gameObject.SetActive(true);
-                       
+                        LockTarget.GetComponentInChildren<LockObject>().setLocked(true);
+
+
                         // Hacky Brain Score Assignment (TODO: Clean this up).
                         switch (LockTarget.GetComponent<LockObject>().GetNodeNumber())
                         {
@@ -160,7 +168,6 @@ namespace Assets.Scripts.LockMiniGame
                                     locks[i].GetComponentInChildren<LockObject>().ResetGame();
                                 }
 
-                                _currBrain = null;
                                 _displayActive = false;
                                 BrainStatus.EndDroppingIntegrity();
                                 StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
@@ -178,6 +185,7 @@ namespace Assets.Scripts.LockMiniGame
                     LockTarget.GetComponentInChildren<LockObject>().SetCurrentLevel(_health.fillAmount);
                     if (_health.fillAmount <= 0.0f)
                     {
+                        playOuch();
                         LockTarget.GetComponentInChildren<LockObject>().setLocked(true);
                         switch (LockTarget.GetComponent<LockObject>().GetNodeNumber())
                         {
@@ -222,13 +230,22 @@ namespace Assets.Scripts.LockMiniGame
             {
                 if (_debug) Debug.Log("Mouse Down");
 
-                _displayActive = true;
-                StartCoroutine(FadeTo(_border, HealthOn, FadeTime));
-                StartCoroutine(FadeTo(_background, HealthOn, FadeTime));
-                StartCoroutine(FadeTo(_health, HealthOn, FadeTime));
-                _mousePosOrigin = Input.mousePosition;
 
-                BrainStatus.BeginDroppingIntegrity();
+                if (!LockTarget.GetComponent<LockObject>().getLocked())
+                {
+
+                    _displayActive = true;
+                    StartCoroutine(FadeTo(_border, HealthOn, FadeTime));
+                    StartCoroutine(FadeTo(_background, HealthOn, FadeTime));
+                    StartCoroutine(FadeTo(_health, HealthOn, FadeTime));
+                    _mousePosOrigin = Input.mousePosition;
+                    BrainStatus.BeginDroppingIntegrity();
+                }
+                else
+                {
+                    LockTarget.GetComponent<AudioSource>().Play();
+                }
+
             }
 
             if (Input.GetMouseButtonUp(0) && _health.color.a != 0.0f)
@@ -258,10 +275,6 @@ namespace Assets.Scripts.LockMiniGame
                 {
                     LockTarget = hit.collider.gameObject;
                     _health.fillAmount = LockTarget.GetComponent<LockObject>().GetCurrentLevel();
-                    if (_health.fillAmount == 1.0f && !LockTarget.transform.Find("ElectricitySphere").gameObject.activeSelf)
-                    {
-                        LockTarget.transform.Find("ElectricitySphere").gameObject.SetActive(true);
-                    }
                     _mouseOverSphere = true;
                 }
                 else
@@ -394,6 +407,21 @@ namespace Assets.Scripts.LockMiniGame
             }
         }
 
+        private void playOuch()
+        {
+
+            if (audioSourceOh != null)
+            {
+                //audioSourceOh.clip = laughClip;
+                audioSourceOh.volume = 0.5f;
+                audioSourceOh.Play();
+            }
+            else
+            {
+                if (_andyDebug) Debug.LogError("LaughAudio AudioSource and/or laugh clip not found!");
+            }
+        }
+
         private void Reset()
         {
             ResetFace();
@@ -412,12 +440,68 @@ namespace Assets.Scripts.LockMiniGame
             StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
             StartCoroutine(FadeTo(_health, HealthOff, FadeTime));
 
-            if (_currBrain != null)
+        }
+
+        public void UpdateBrainStates()
+        {
+            print("!");
+
+            if (_currBrain == null)
             {
-                //_currBrain.GetComponent<BrainController>().Node1Score = 0;
-                //_currBrain.GetComponent<BrainController>().Node2Score = 0;
-                //_currBrain.GetComponent<BrainController>().Node3Score = 0;
-                //_currBrain.GetComponent<BrainController>().Node4Score = 0;
+                GameManager.Instance.SetResetNeeded(false);
+                return;
+            }
+
+            print("!!");
+            var locks = GameObject.FindGameObjectsWithTag("Lock");
+            print(locks.Length);
+            for (var i = 0; i < locks.Length; i++)
+            {
+
+                switch (locks[i].GetComponent<LockObject>().GetNodeNumber())
+                {
+                    case 1:
+                        if (!_currBrain.GetComponent<BrainController>().Node1Works)
+                        {
+                            if (_currBrain.GetComponent<BrainController>().Node1Score == 1.0f)
+                                locks[i].transform.Find("ElectricitySphere").gameObject.SetActive(true);
+                            locks[i].GetComponent<LockObject>().setLocked(true);
+                        }
+                        locks[i].GetComponentInChildren<LockObject>().SetCurrentLevel(_currBrain.GetComponent<BrainController>().Node1Score);
+                        break;
+                    case 2:
+                        if (!_currBrain.GetComponent<BrainController>().Node2Works)
+                        {
+                            if (_currBrain.GetComponent<BrainController>().Node2Score == 1.0f)
+                                locks[i].transform.Find("ElectricitySphere").gameObject.SetActive(true);
+                            locks[i].GetComponent<LockObject>().setLocked(true);
+
+                        }
+                        locks[i].GetComponentInChildren<LockObject>().SetCurrentLevel(_currBrain.GetComponent<BrainController>().Node1Score);
+                        break;
+                    case 3:
+                        if (!_currBrain.GetComponent<BrainController>().Node3Works)
+                        {
+                            if (_currBrain.GetComponent<BrainController>().Node3Score == 1.0f)
+                                locks[i].transform.Find("ElectricitySphere").gameObject.SetActive(true);
+                            locks[i].GetComponent<LockObject>().setLocked(true);
+
+                        }
+                        locks[i].GetComponentInChildren<LockObject>().SetCurrentLevel(_currBrain.GetComponent<BrainController>().Node1Score);
+                        break;
+                    case 4:
+                        if (!_currBrain.GetComponent<BrainController>().Node4Works)
+                        {
+
+                            if (_currBrain.GetComponent<BrainController>().Node4Score == 1.0f) 
+                                locks[i].transform.Find("ElectricitySphere").gameObject.SetActive(true);
+
+                            locks[i].GetComponent<LockObject>().setLocked(true);
+                            print("Locking 4");
+                        }
+                        locks[i].GetComponentInChildren<LockObject>().SetCurrentLevel(_currBrain.GetComponent<BrainController>().Node1Score);
+                        break;
+                }
             }
         }
     }

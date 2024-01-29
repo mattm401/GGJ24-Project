@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.LockMiniGame;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -127,6 +128,7 @@ public class GameManager : MonoBehaviour
         _brainScores.Add(score);
         _currOveralScore = _brainScores.Average();
         ScoreUI.text = $"EFFICIENCY RATING: {(_currOveralScore * 100f).ToString("F2") + "%"}";
+        GetComponent<AudioSource>().Play();
     }
 
     public bool IsResetNeeded()
