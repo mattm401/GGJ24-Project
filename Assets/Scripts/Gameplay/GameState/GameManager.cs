@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
     private string _exitInputKey;
     public TextMeshProUGUI MiniGameEscapeText;
     public BrainStatusUI BrainMonitor;
-
+    public TutorialMessageDisplay MessageDisplay;
+    public MessageList Messages;
     private bool _resetNeeded;
 
     // Public property to access the singleton instance
@@ -70,8 +71,15 @@ public class GameManager : MonoBehaviour
         HookupInputs();
 
         TurnOffMiniGame();
+        OpeningMessages();
     }
 
+    private void OpeningMessages()
+    {
+        List<TutorialMessage> messages = new List<TutorialMessage> { Messages.Messages[0], Messages.Messages[1] };
+        MessageDisplay.DisplayMultipleMessages(messages);
+    }
+    
     private void HookupInputs()
     {
         InputAction exit = Actions.FindActionMap(InputMap.DEFAULT_CONTROL_MAP_KEY).FindAction(InputMap.ESCAPE_CONTROL_INPUT_KEY);

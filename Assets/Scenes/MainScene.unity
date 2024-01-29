@@ -2601,6 +2601,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 816839028834127517, guid: 56553c59a52bf504aaac866c7f4030cd, type: 3}
   m_PrefabInstance: {fileID: 228667854}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &240789275 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2856880586202668972, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+  m_PrefabInstance: {fileID: 300145894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead73d4e594a53849a42c7a887d51935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &251958142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2889,6 +2900,111 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 145489941708477456, guid: f3666c4739f55c24eb42ed8d7b508700, type: 3}
   m_PrefabInstance: {fileID: 290689681}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &300145894
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2856880586202668972, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: MessageText
+      value: 
+      objectReference: {fileID: 1132221927}
+    - target: {fileID: 2856880586202668972, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: MessageImage
+      value: 
+      objectReference: {fileID: 318459953}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319714192611121458, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122620244740084016, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+      propertyPath: m_Name
+      value: Tutorial
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
 --- !u!1001 &315702713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2966,6 +3082,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3598164536646371208, guid: 3f8fbe2b2e0fcda49bdf4860e8efd375, type: 3}
   m_PrefabInstance: {fileID: 315702713}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &318459953 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5546791246019465944, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+  m_PrefabInstance: {fileID: 300145894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &325151553
 GameObject:
   m_ObjectHideFlags: 0
@@ -10858,6 +10985,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 816839028834127517, guid: 56553c59a52bf504aaac866c7f4030cd, type: 3}
   m_PrefabInstance: {fileID: 1126413213}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1132221927 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7886856651597128852, guid: 2acaaa817f3940841ae5c657cfea7835, type: 3}
+  m_PrefabInstance: {fileID: 300145894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1140751270
 GameObject:
   m_ObjectHideFlags: 0
@@ -11333,6 +11471,77 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5725000371507048362, guid: b2452a5c2cd649a4db9eebcd16f7b155, type: 3}
   m_PrefabInstance: {fileID: 1176112675}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1181246683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1181246685}
+  - component: {fileID: 1181246684}
+  m_Layer: 0
+  m_Name: MessageList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1181246684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181246683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9fb4d170e497a94090d95113df32c63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Messages:
+  - Tag: Intro
+    Messages:
+    - Hello! Welcome to BrainCo!
+    - BrainCo is the only company dedicated to putting a smile on each and every
+      brain.
+    - How do you know if a brain is smiling?
+    - That's where YOU come in!
+    - Using our in house propritary brain scanner integrated into the corpse of respected
+      comedian Donny Rangerfield,
+    - Known as "The Receptacle", we can give any brain a smile!
+    - Let's Get Started!
+    Image: {fileID: 21300000, guid: 6ff6f363c2f611545930b6b6fdab2ae9, type: 3}
+  - Tag: GetBrain
+    Messages:
+    - Please proceed to our high tech cerebelum delivery station and request a brain
+      to get started!
+    Image: {fileID: 21300000, guid: 94c683806cd563344820c081410fd2bd, type: 3}
+  - Tag: BrainGot
+    Messages:
+    - Great Job! Looks like someone's came here with brains to spare!
+    Image: {fileID: 21300000, guid: fa193befadc093247a1078402f45fd90, type: 3}
+  - Tag: MiniGame
+    Messages:
+    - Now its time to proceed to our signature insertion procedure. Please insert
+      the brain into The Receptacle.
+    Image: {fileID: 21300000, guid: dc327da31127a18428feafc2231ded1d, type: 3}
+--- !u!4 &1181246685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181246683}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.7333418, y: 2.0500002, z: -1.5228876}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1217072937
 GameObject:
   m_ObjectHideFlags: 0
@@ -19586,6 +19795,8 @@ MonoBehaviour:
   Actions: {fileID: -944628639613478452, guid: 648ba62f5f36a04448342f0eec8ef59e, type: 3}
   MiniGameEscapeText: {fileID: 1435578600}
   BrainMonitor: {fileID: 721252869}
+  MessageDisplay: {fileID: 240789275}
+  Messages: {fileID: 1181246684}
 --- !u!4 &2038635178
 Transform:
   m_ObjectHideFlags: 0
@@ -21338,6 +21549,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 2067635428}
   - {fileID: 1234564526}
+  - {fileID: 1181246685}
   - {fileID: 2038635178}
   - {fileID: 445465776477152988}
   - {fileID: 3587426961483923810}
@@ -21370,6 +21582,7 @@ SceneRoots:
   - {fileID: 2114989707}
   - {fileID: 1401279113}
   - {fileID: 721252868}
+  - {fileID: 300145894}
   - {fileID: 1892185379}
   - {fileID: 726910648}
   - {fileID: 1297688476}
