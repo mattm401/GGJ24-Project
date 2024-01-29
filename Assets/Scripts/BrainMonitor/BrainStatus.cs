@@ -47,9 +47,9 @@ public class BrainStatus : MonoBehaviour
     {
 
         float joyFactor = (_node1Level + _node2Level + _node3Level + _node4Level) / 4;
-        float terrorFactor =_nodeIntegrity-((_node1Level+_node2Level+_node3Level))/4;
-        float angerfactor = _nodeIntegrity - ((_node4Level + _node2Level + _node3Level)) / 4;
-        float confusionFactor = _nodeIntegrity - ((_node4Level + _node1Level + _node3Level)) / 4;
+        float terrorFactor =1-((_nodeIntegrity+_node1Level+_node2Level)/3);
+        float angerfactor = 1 -(( _nodeIntegrity+_node4Level + _node2Level) / 3);
+        float confusionFactor = 1 - ((_nodeIntegrity+_node4Level + _node1Level + _node3Level) /4);
 
         _joyLevel = joyFactor;// / totalPoints;
         _terrorLevel = terrorFactor;/// totalPoints;
