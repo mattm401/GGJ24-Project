@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class BrainStatus : MonoBehaviour
 {
-    private float _eyeSlider;
-    private float _mouthSlider;
+    public Assets.Scripts.LockMiniGame.LockObject Node1;
+    public Assets.Scripts.LockMiniGame.LockObject Node2;
+    public Assets.Scripts.LockMiniGame.LockObject Node3;
+    public Assets.Scripts.LockMiniGame.LockObject Node4;
+    private float _node1Level;
+    private float _node2Level;
 
-    private float _gooLevel;
-    private float _conductivity;
+    private float _node3Level;
+    private float _node4Level;
     private float _nodeIntegrity;
 
     private float _overallStability;
@@ -16,39 +20,57 @@ public class BrainStatus : MonoBehaviour
     private float _terrorLevel;
     private float _angerLevel;
     private float _confusionLevel;
-
+    private bool _integrityDropping;
+    private Coroutine _decayRoutine;
+    public bool TrackBrain;
     public BrainStatus()
     {
-        _eyeSlider = .5f;
-        _mouthSlider = .5f;
-        _gooLevel = 1;
-        _conductivity = 1;
+        _node1Level = .5f;
+        _node2Level = .5f;
+        _node3Level = .7f;
+        _node4Level = .7f;
         _nodeIntegrity = 1;
 
         CalculateEmotionalLevels(); 
     }
 
+    public void SetBrain()
+    {
+        _node1Level = Node1.GetCurrentLevel();
+        _node2Level = Node2.GetCurrentLevel();
+        _node3Level = Node3.GetCurrentLevel();
+        _node4Level = Node4.GetCurrentLevel();
+        CalculateEmotionalLevels();
+    }
+
     private void CalculateEmotionalLevels()
     {
 
-        float joyFactor = _overallStability;
-        float terrorFactor = _eyeSlider * (1 - _mouthSlider) * (1- _gooLevel)*3;
-        float angerfactor = (1 - _eyeSlider) * (1 - _mouthSlider) * (1- _nodeIntegrity)*3;
-        float confusionFactor = _eyeSlider * _mouthSlider * (1-_conductivity)*3;
-
-        float totalPoints = joyFactor + terrorFactor + angerfactor + confusionFactor;
+        float joyFactor = (_node1Level + _node2Level + _node3Level + _node4Level) / 4;
+        float terrorFactor =_nodeIntegrity-((_node1Level+_node2Level+_node3Level))/4;
+        float angerfactor = _nodeIntegrity - ((_node4Level + _node2Level + _node3Level)) / 4;
+        float confusionFactor = _nodeIntegrity - ((_node4Level + _node1Level + _node3Level)) / 4;
 
         _joyLevel = joyFactor;// / totalPoints;
         _terrorLevel = terrorFactor;/// totalPoints;
         _angerLevel = angerfactor;/// totalPoints;
         _confusionLevel = confusionFactor;/// totalPoints;
             
-        _overallStability = (_gooLevel + _conductivity + _nodeIntegrity) / 3;
+        _overallStability = ((_node1Level + _node2Level + _node3Level + _node4Level)/4) * _nodeIntegrity; 
+
+        if(_overallStability<=0)
+        {
+            Node1.setLocked(true);
+            Node2.setLocked(true);
+            Node3.setLocked(true);
+            Node4.setLocked(true);
+        }
     }
+
 
     public void ChangeGoo(float change)
     {
-        _gooLevel = change > 1 ? 1 : change < 0 ? 0 : change;
+        _node3Level = change > 1 ? 1 : change < 0 ? 0 : change;
         CalculateEmotionalLevels();
     }
 
@@ -60,35 +82,35 @@ public class BrainStatus : MonoBehaviour
 
     public void ChangeConductivity(float change)
     {
-        _conductivity = change > 1 ? 1 : change < 0 ? 0 : change;
+        _node4Level = change > 1 ? 1 : change < 0 ? 0 : change;
         CalculateEmotionalLevels();
     }
 
     public void ChangeEye(float change)
     {
-        _eyeSlider = change > 1 ? 1 : change < 0 ? 0 : change;
+        _node1Level = change > 1 ? 1 : change < 0 ? 0 : change;
         CalculateEmotionalLevels();
     }
 
     public void ChangeMouth(float change)
     {
-        _mouthSlider = change > 1 ? 1 : change < 0 ? 0 : change;
+        _node2Level = change > 1 ? 1 : change < 0 ? 0 : change;
         CalculateEmotionalLevels();
     }
 
     public float GetEye()
     {
-        return _eyeSlider;
+        return _node1Level;
     }
 
     public float GetMouth()
     {
-        return _mouthSlider;
+        return _node2Level;
     }
 
     public float GetGoo()
     {
-        return _gooLevel;
+        return _node3Level;
     }
 
     public float GetNode()
@@ -98,7 +120,7 @@ public class BrainStatus : MonoBehaviour
 
     public float GetConduct()
     {
-        return _conductivity;
+        return _node4Level;
     }
 
 
@@ -140,5 +162,34 @@ public class BrainStatus : MonoBehaviour
         }
 
         return 2;
+    }
+
+    public void BeginDroppingIntegrity()
+    {
+        if(!_integrityDropping)
+        {
+            _decayRoutine = StartCoroutine(DropIntegrity());
+        }
+        
+    }
+
+    public void EndDroppingIntegrity()
+    {
+        _integrityDropping= false;
+        if(_decayRoutine!=null)
+        {
+            StopCoroutine(_decayRoutine);
+        }
+    }
+
+    public IEnumerator DropIntegrity()
+    {
+        _integrityDropping = true;
+        while (_integrityDropping&&_overallStability>0)
+        {
+            yield return new WaitForSeconds(1);
+            _nodeIntegrity -= 0.01f;
+            SetBrain();
+        }
     }
 }

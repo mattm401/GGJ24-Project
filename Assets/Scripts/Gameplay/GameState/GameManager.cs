@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public InputActionAsset Actions;
     private string _exitInputKey;
     public TextMeshProUGUI MiniGameEscapeText;
+    public BrainStatusUI BrainMonitor;
 
     private bool _resetNeeded;
 
@@ -95,6 +96,8 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         MiniGameOn = true;
         MiniGameEscapeText.text = $"{_exitInputKey} - EXIT MINIGAME";
+        BrainMonitor.SwitchMonitor(true);
+
     }
 
     public void TurnOffMiniGame()
@@ -105,6 +108,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         MiniGameOn = false;
         GameManager.Instance.SetResetNeeded(true);
+        BrainMonitor.SwitchMonitor(false);
     }
 
     // Example method to start the game
