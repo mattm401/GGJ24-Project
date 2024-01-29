@@ -15,10 +15,12 @@ public class TutorialMessageDisplay : MonoBehaviour
     private Coroutine _displayRoutine;
     private bool _isPlaying = false;
     private List<TutorialMessage> _messageQueue;
+
+    private Coroutine _multiRoutine;
     public void DisplayMessage(TutorialMessage message)
     {
         _currentMessage= message;
-        StartCoroutine(MessageRoutine());
+        _displayRoutine = StartCoroutine(MessageRoutine());
     }
 
     public IEnumerator MessageRoutine()
@@ -40,8 +42,9 @@ public class TutorialMessageDisplay : MonoBehaviour
             }
             MessageAnimator.SetBool("DisplayText", false);
         }
-        yield return new WaitForSeconds(1f);
         MessageAnimator.SetBool("On", false);
+        yield return new WaitForSeconds(2f);
+        
         _isPlaying = false;
     }
 
@@ -64,6 +67,21 @@ public class TutorialMessageDisplay : MonoBehaviour
     public void DisplayMultipleMessages(List<TutorialMessage> messages)
     {
         _messageQueue = messages;
-        StartCoroutine(MultiRoutine());
+        _multiRoutine = StartCoroutine(MultiRoutine());
+    }
+
+    public void StopAll()
+    {
+        if(_multiRoutine!=null)
+        {
+            StopCoroutine( _multiRoutine);
+        }
+        if(_displayRoutine!=null)
+        {
+            StopCoroutine(_displayRoutine);
+        }
+        MessageAnimator.SetBool("DisplayText", false);
+        MessageAnimator.SetBool("On", false);
+        _isPlaying = false;
     }
 }

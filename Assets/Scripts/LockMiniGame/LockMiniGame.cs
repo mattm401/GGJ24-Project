@@ -3,7 +3,7 @@ using System.Collections;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Collections.Generic;
 namespace Assets.Scripts.LockMiniGame
 {
     public class LockMiniGame : MonoBehaviour
@@ -17,7 +17,8 @@ namespace Assets.Scripts.LockMiniGame
         
 
         public BrainStatus BrainStatus;
-
+        public TutorialMessageDisplay TutorialMessageDisplay;
+        public List<TutorialMessage> MiniGameTutorialMessages;
         public SkinnedMeshRenderer skinnedMeshRenderer; //MeshRenderer for Face
         public string[] blendShapeNames; // Names of face blendshapes
         [Range(-100, 100)]
@@ -42,7 +43,7 @@ namespace Assets.Scripts.LockMiniGame
         private Image _border;
         private Image _background;
         private Image _health;
-
+        private bool _tutorialDisplayed;
         private GameObject _currBrain;
 
         // Start is called before the first frame update
@@ -68,7 +69,12 @@ namespace Assets.Scripts.LockMiniGame
                 CheckForBrain();
                 UpdateBrainStates();
             }
-
+            if(!_tutorialDisplayed)
+            {
+                TutorialMessageDisplay.StopAll();
+                TutorialMessageDisplay.DisplayMultipleMessages(MiniGameTutorialMessages);
+                _tutorialDisplayed = true;
+            }
             CheckForBrain();
             DetectLockContact();
             UpdateLockDisplayBar();
@@ -439,7 +445,7 @@ namespace Assets.Scripts.LockMiniGame
             StartCoroutine(FadeTo(_border, HealthOff, FadeTime));
             StartCoroutine(FadeTo(_background, HealthOff, FadeTime));
             StartCoroutine(FadeTo(_health, HealthOff, FadeTime));
-
+            BrainStatus.SetBrain();
         }
 
         public void UpdateBrainStates()
